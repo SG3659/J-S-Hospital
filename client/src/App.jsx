@@ -4,12 +4,12 @@ import Signup from "../pages/Signup";
 
 function App() {
   return (
-    <>
+    <div>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-    </>
+    </div>
   );
 }
 
