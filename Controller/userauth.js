@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 exports.register = async (req, res) => {
   try {
     //fetch  data
-    const {name, email, password} = req.body;
+    const { username, email, password } = req.body;
     // user already exists
     const userexisting = await User.findOne({ email });
     if (userexisting) {
@@ -17,14 +17,14 @@ exports.register = async (req, res) => {
     try {
       hashpass = await bcrypt.hashSync(password, 10);
     } catch (error) {
-      return res(500).json({
+      return res.status(500).json({
         success: false,
         message: "error in hashing pass ",
       });
     }
     // create
     const user = await User.create({
-      name,
+      username,
       email,
       password: hashpass,
     });

@@ -2,7 +2,7 @@ const { type } = require("express/lib/response");
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true,
     },
@@ -14,8 +14,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-  },{timestamps:true}
+  },
+  { timestamps: true }
 );
 
 const usermodel = mongoose.model("user", userSchema);
-module.exports =usermodel;
+module.exports = usermodel;
