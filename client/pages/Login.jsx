@@ -20,8 +20,8 @@ const login = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto mt-40">
-      <h1 className="text-3xl my-7 text-center font-semibold bg-orange-400 rounded-lg">
-        Log-In
+      <h1 className="text-3xl my-7 text-center text-white font-semibold bg-orange-400 rounded-lg">
+        WELCOME BACK
       </h1>
       <form onSubmit={submitHandler} className="flex flex-col gap-3">
         <input
