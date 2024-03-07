@@ -1,5 +1,6 @@
 const User = require("../Model/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 exports.register = async (req, res) => {
   try {
     //fetch  data
@@ -33,7 +34,7 @@ exports.register = async (req, res) => {
       message: "User created successfully ",
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "User cannot be registered, please try again later",
@@ -45,11 +46,10 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Invalid email",
       });
-      return;
     }
     const storedHashedPassword = user.password;
     const isPasswordValid = await bcrypt.compareSync(
@@ -57,19 +57,20 @@ exports.login = async (req, res) => {
       storedHashedPassword
     );
     if (!isPasswordValid) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Invalid password",
       });
-    } else {
-      
-      res.status(200).json({
-        success: true,
-        message: "Logged In ",
-      });
     }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN);
+    //const { password: pass, ...rest } = user;
+    const { password: pass, ...rest } = user._doc;
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "User cannot be login, please try again later",
