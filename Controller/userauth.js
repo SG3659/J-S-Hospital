@@ -65,10 +65,15 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN);
     //const { password: pass, ...rest } = user;
     const { password: pass, ...rest } = user._doc;
+
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json(rest);
+      .json({
+        success: true,
+        message: "LoggedIN",
+        ...rest,
+      });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
