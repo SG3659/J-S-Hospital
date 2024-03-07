@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
+import axios from "axios";
+import toast from "react-hot-toast";
 const login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,9 +16,27 @@ const login = () => {
       [e.target.name]: e.target.value,
     });
   }
-  function submitHandler(e) {
+  const submitHandler = async (e) => {
     e.preventDefault();
-  }
+    try {
+      const response = await axios.post(
+        "/api/user/login",
+        JSON.stringify(formData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.success) {
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto mt-40">
@@ -36,7 +56,7 @@ const login = () => {
         <label className="relative">
           <input
             className=" border p-3 rounded-lg focus:outline-none w-full"
-            type="password"
+            type={showpass ? "text" : "password"}
             placeholder="password"
             name="password"
             value={formData.password}
