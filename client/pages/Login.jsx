@@ -3,7 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "../src/redux/alertSlice";
 const login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -19,6 +22,7 @@ const login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      dispatch(showLoading());
       const response = await axios.post(
         "/api/user/login",
         JSON.stringify(formData),
@@ -28,6 +32,7 @@ const login = () => {
           },
         }
       );
+      dispatch(hideLoading());
       if (response.data.success) {
         localStorage.setItem("token", response.data.data);
         navigate("/");
@@ -35,6 +40,7 @@ const login = () => {
         toast.error(response.data.message);
       }
     } catch (error) {
+      dispatch(hideLoading());
       toast.error("Something went wrong");
     }
   };
