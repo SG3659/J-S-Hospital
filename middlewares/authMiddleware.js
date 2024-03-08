@@ -3,7 +3,9 @@
 const jwt = require("jsonwebtoken");
 exports.authMiddleware = async (req, res, next) => {
   try {
+    // retrieves the token from request headers
     const token = req.headers["authentication"].split(" ")[1];
+    // verify the token 
     jwt.verify(token, process.env.JWT_TOCKEN, (err, decoded) => {
       if (err) {
         return res.status(401).json({
@@ -11,6 +13,7 @@ exports.authMiddleware = async (req, res, next) => {
           message: "Auth failed",
         });
       } else {
+        // decode token payload and assign 
         req.body.userId = decoded.id;
         next();
       }
