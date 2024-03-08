@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN);
     //const { password: pass, ...rest } = user;
-    const { password: pass, ...rest } = user._doc;
+    const { password: pass, ...rest } = user._doc; // not send the password
 
     res
       .cookie("access_token", token, { httpOnly: true })
@@ -72,6 +72,7 @@ exports.login = async (req, res) => {
       .json({
         success: true,
         message: "LoggedIN",
+        data: token,
         ...rest,
       });
   } catch (error) {
@@ -79,6 +80,30 @@ exports.login = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "User cannot be login, please try again later",
+    });
+  }
+};
+exports.userinfo = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body.userId });
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "user does not exist",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        data: {
+          name: user.name,
+          email: user.email,
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error getting user info ",
     });
   }
 };
