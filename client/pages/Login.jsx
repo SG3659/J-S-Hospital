@@ -50,7 +50,7 @@ const login = () => {
           type="email"
           placeholder="email"
           name="email"
-          value={formData.eamil}
+          value={formData.email}
           onChange={changeHandler}
           required
         />
