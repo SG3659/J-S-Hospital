@@ -95,7 +95,7 @@ exports.userinfo = async (req, res) => {
       res.status(200).json({
         success: true,
         data: {
-          name: user.name,
+          name: user.username,
           email: user.email,
         },
       });
