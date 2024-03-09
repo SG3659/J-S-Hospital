@@ -4,11 +4,14 @@ import Signup from "../pages/Signup";
 import Home from "../pages/Home";
 import ProtectedRoute from "./componnents/ProtectedRoute";
 import PublicRoute from "./componnents/PublicRoute";
+import Spinner from "./componnents/Spinner";
+import { useSelector } from "react-redux";
+
 function App() {
-  //const { loading } = useSelector((state) => state.alerts);
+  const { loading } = useSelector((state) => state.alerts);
   return (
     <div>
-      {/*loading && (<Spinner/>)*/}
+      {loading && <Spinner />}
 
       <Routes>
         <Route
