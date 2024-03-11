@@ -25,10 +25,12 @@ function ProtectedRoute(props) {
       if (response.data.success) {
         dispatch(setUser(response.data.data));
       } else {
+        localStorage.clear();
         navigate("/login");
       }
     } catch (error) {
       dispatch(hideLoading());
+      localStorage.clear();// this when wrong token pass 
       navigate("/login");
     }
   };

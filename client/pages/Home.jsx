@@ -13,7 +13,6 @@ const Home = () => {
           },
         }
       );
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
