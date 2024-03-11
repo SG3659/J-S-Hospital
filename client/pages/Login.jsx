@@ -34,6 +34,7 @@ const login = () => {
       );
       dispatch(hideLoading());
       if (response.data.success) {
+        //localstorage created 
         localStorage.setItem("token", response.data.data);
         navigate("/");
       } else {

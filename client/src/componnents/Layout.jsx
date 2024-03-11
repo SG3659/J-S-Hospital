@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { menu, close } from "../assets";
 import { useState } from "react";
-import { navLinks } from "../constants";
+import { userMenu, adminmenu } from "../constants";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user); // show email on ui (get login person all details)
+  console.log(user);
   const [toggle, setToggle] = useState(false);
+  const menuToBeRendered = user?.isAdmin ? adminmenu : userMenu; // check login is admin aur user
+  const navigate = useNavigate();
   return (
     <div>
       <nav className=" p-3 w-full z-20  bg-green-500 flex items-center  rounded-2xl">
@@ -18,11 +21,21 @@ const Layout = ({ children }) => {
             </h1>
           </Link>
           <ul className="list-none hidden sm:flex flex-row gap-4  ">
-            {navLinks.map((items) => (
+            {menuToBeRendered.map((items) => (
               <li key={items.id} className="hover:font-medium hover:underline">
                 <Link to={items.path}>{items.title}</Link>
               </li>
             ))}
+            {/*Logout*/}
+            <li
+              className="hover:font-medium hover:underline cursor-pointer"
+              onClick={() => {
+                localStorage.clear();
+                navigate("/login");
+              }}
+            >
+              LogOut
+            </li>
           </ul>
         </div>
         {/* menu for smartphone*/}
@@ -39,7 +52,7 @@ const Layout = ({ children }) => {
             } absolute p-6 top-9 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl bg-indigo-500`}
           >
             <ul className="list-none flex justify-end items-start flex-col gap-4 ">
-              {navLinks.map((items) => (
+              {menuToBeRendered.map((items) => (
                 <li
                   key={items.id}
                   className="hover:font-medium hover:underline"
@@ -47,6 +60,15 @@ const Layout = ({ children }) => {
                   <Link to={items.path}>{items.title}</Link>
                 </li>
               ))}
+              <li
+                className="hover:font-medium hover:underline cursor-pointer"
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/login");
+                }}
+              >
+                LogOut
+              </li>
             </ul>
           </div>
         </div>
