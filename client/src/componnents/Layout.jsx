@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
   const { user } = useSelector((state) => state.user); // show email on ui (get login person all details)
-  console.log(user);
   const [toggle, setToggle] = useState(false);
   const menuToBeRendered = user?.isAdmin ? adminmenu : userMenu; // check login is admin aur user
   const navigate = useNavigate();
@@ -75,11 +74,20 @@ const Layout = ({ children }) => {
       </nav>
       <div className="p-1 mt-1 px-20 border border-gray-400 rounded-xl flex flex-wrap gap-4">
         <IoMdNotificationsOutline fontSize={23} />
-        <Link to="/profile">
+        {/* <Link to="/profile">
           <span>Welcome!</span> {user?.email}
-        </Link>
+              </Link>*/}
+        {user?.isAdmin ? (
+          <Link>
+            <span>Welcome Admin!</span> {user?.email}
+          </Link>
+        ) : (
+          <Link to="/profile">
+            <span>Welcome!</span> {user?.email}
+          </Link>
+        )}
       </div>
-      <div className="bg-yellow-700 mt-4">{children}</div>
+      <div className="border-yellow-700 mt-4 p-5  w-full mx-auto  rounded-xl ">{children}</div>
     </div>
   );
 };
