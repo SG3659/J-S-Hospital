@@ -1,5 +1,5 @@
 // jwt authentication protect the routes 
-// middleware to validate the token 
+// in this we check the token is valid or not  
 const jwt = require("jsonwebtoken");
 exports.authMiddleware = async (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ exports.authMiddleware = async (req, res, next) => {
         // decode token payload and assign 
         req.body.userId = decoded.id;
         next();
-      }
+      } 
     });
   } catch (error) {
     return res.status(401).json({

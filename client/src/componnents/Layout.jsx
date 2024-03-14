@@ -1,8 +1,10 @@
+// implement in all pages
 import { Link, useNavigate } from "react-router-dom";
 import { menu, close } from "../assets";
 import { useState } from "react";
 import { userMenu, adminmenu } from "../constants";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { FaBell } from "react-icons/fa";
+
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
@@ -73,10 +75,16 @@ const Layout = ({ children }) => {
         </div>
       </nav>
       <div className="p-1 mt-1 px-20 border border-gray-400 rounded-xl flex flex-wrap gap-4">
-        <IoMdNotificationsOutline fontSize={23} />
-        {/* <Link to="/profile">
-          <span>Welcome!</span> {user?.email}
-              </Link>*/}
+        <div className="notification-badge-container">
+          <FaBell fontSize={23} />
+          {/* show the form filled */} 
+          {user?.unseenNotifications.length > 0 && (
+            <span className="notification-badge">
+              {user.unseenNotifications.length}
+            </span>
+          )}
+        </div>
+
         {user?.isAdmin ? (
           <Link>
             <span>Welcome Admin!</span> {user?.email}
@@ -87,7 +95,9 @@ const Layout = ({ children }) => {
           </Link>
         )}
       </div>
-      <div className="border-yellow-700 mt-4 p-5  w-full mx-auto  rounded-xl ">{children}</div>
+      <div className="border-yellow-700 mt-4 p-5  w-full mx-auto  rounded-xl ">
+        {children}
+      </div>
     </div>
   );
 };

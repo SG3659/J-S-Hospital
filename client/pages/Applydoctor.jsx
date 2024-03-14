@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Layout from "../src/componnents/Layout";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export const Applydoctor = () => {
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setformData] = useState({
     firstName: "",
     lastName: "",
@@ -25,10 +29,34 @@ export const Applydoctor = () => {
       [e.target.name]: e.target.value,
     });
   }
-
-  function submitHandler(e) {
+  const submitHandler = async (e) => {
     e.preventDefault();
-  }
+    try {
+      dispatch(showLoading());
+      const response = await axios.post(
+        "/api/user/applydoctor",
+        {
+          ...formData,
+          userId: user._id,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Something went wrong ", error);
+    }
+  };
   return (
     <Layout>
       <p className="text-3xl font-bold font-serif">Apply Doctors</p>
@@ -157,13 +185,13 @@ export const Applydoctor = () => {
             value={formData.toTime}
           />
         </label>
-      </form>
-      <button
-        className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
+        <button
+          className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
         disabled:opacity-80  mt-7 "
-      >
-        Submit
-      </button>
+        >
+          Submit
+        </button>
+      </form>
     </Layout>
   );
 };
