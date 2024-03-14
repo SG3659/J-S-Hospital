@@ -1,4 +1,5 @@
 const User = require("../Model/userModel");
+const Doctor = require("../Model/doctormodel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 exports.register = async (req, res) => {
@@ -51,6 +52,7 @@ exports.login = async (req, res) => {
         message: "Invalid email",
       });
     }
+    // checking the pass word
     const storedHashedPassword = user.password;
     const isPasswordValid = await bcrypt.compareSync(
       password,
@@ -62,6 +64,7 @@ exports.login = async (req, res) => {
         message: "Invalid password",
       });
     }
+    // token generate
     const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN);
     //const { password: pass, ...rest } = user;
     const { password: pass, ...rest } = user._doc; // not send the password
@@ -103,6 +106,47 @@ exports.userinfo = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error getting user info ",
+    });
+  }
+};
+
+exports.doctors = async (req, res) => {
+  try {
+    const newdoctor = new Doctor({ ...req.body, status: "pending" });
+    await newdoctor.save();
+    const adminUser = await User.findOne({ isAdmin: true });
+
+    if (!adminUser) {
+      return res.status(404).json({
+        success: false,
+        message: "No admin user found",
+      });
+    }
+
+    //admin unseennotification
+    const unseenNotifications = adminUser.unseenNotifications || [];
+    unseenNotifications.push({
+      type: "new-doctor-request",
+      message: `${newdoctor.firstName} ${newdoctor.lastName} has applied for a doctor account `,
+      data: {
+        doctorId: newdoctor._id,
+        name: newdoctor.firstName + " " + newdoctor.lastName,
+      },
+      onclickPath: "/admin/doctors",
+    });
+
+    // useennotification update
+    await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
+
+    return res.status(200).json({
+      success: true,
+      message: "Doctor account applied Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
     });
   }
 };
