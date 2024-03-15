@@ -1,4 +1,3 @@
-
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -30,7 +29,7 @@ function ProtectedRoute(props) {
       }
     } catch (error) {
       dispatch(hideLoading());
-      localStorage.clear();// this when wrong token pass 
+      localStorage.clear(); // this when wrong token pass
       navigate("/login");
     }
   };
@@ -40,7 +39,7 @@ function ProtectedRoute(props) {
       getUser();
     }
   }, [user]);
-//starting web page from login
+  //starting web page from login
   if (localStorage.getItem("token")) {
     return props.children;
   } else {

@@ -132,7 +132,7 @@ exports.doctors = async (req, res) => {
         doctorId: newdoctor._id,
         name: newdoctor.firstName + " " + newdoctor.lastName,
       },
-      onclickPath: "/admin/doctors",
+      onClickPath:"/admin/doctors",
     });
 
     // useennotification update
