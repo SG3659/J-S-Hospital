@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { setUser } from "../src/redux/userSlice";
 
 const Notification = () => {
   const dispatch = useDispatch();
@@ -14,12 +15,21 @@ const Notification = () => {
   const markAllAsSeen = async () => {
     try {
       dispatch(showLoading());
-      const response = await axios.post("/api/user/mark-all-notification-seen", {
-        userId: user._id,
-      });
+      const response = await axios.post(
+        "/api/user/mark-all-notification-seen",
+        {
+          userId: user._id,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
+        dispatch(setUser(response.data.data));
       } else {
         toast.error(response.data.message);
       }
@@ -28,14 +38,39 @@ const Notification = () => {
       console.error("Something went wrong ", error);
     }
   };
-
+  const markAllAsDelete = async () => {
+    try {
+      dispatch(showLoading());
+      const response = await axios.post(
+        "/api/user/mark-all-notification-delete",
+        {
+          userId: user._id,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+        dispatch(setUser(response.data.data));
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Something went wrong ", error);
+    }
+  };
   return (
     <Layout>
       <h1 className="text-3xl font-bold font-serif">Notification</h1>
       <hr className="border-black"></hr>
       <Tabs>
         <Tabs.TabPane tab="Unseen" key={0}>
-          <div className="flex justify-end">
+          <div className="flex justify-end cursor-pointer">
             <h1 className="anchor" onClick={markAllAsSeen}>
               Marked all As Seen
             </h1>
@@ -43,7 +78,7 @@ const Notification = () => {
           {user?.unseenNotifications.map((notification) => (
             <div
               key={notification.index}
-              className="p-2"
+              className="p-2 cursor-pointer"
               onClick={() => navigate("/admin/doctors")}
             >
               <div className="border border-solid border-black p-1 rounded-xl ">
@@ -53,12 +88,16 @@ const Notification = () => {
           ))}
         </Tabs.TabPane>
         <Tabs.TabPane tab="seen" key={1}>
-          <div className="flex justify-end">
-            <h1 className="anchor">Delete all</h1>
+          <div className="flex justify-end cursor-pointer">
+            <h1 className="anchor" onClick={markAllAsDelete}>
+              Delete all
+            </h1>
           </div>
           {user?.seenNotifications.map((notification) => (
-            <div key={notification.index} className="">
-              <div>{notification.message}</div>
+            <div key={notification.index} className="p-2  cursor-pointer">
+              <div className="border border-solid border-black p-1 rounded-xl ">
+                {notification.message}
+              </div>
             </div>
           ))}
         </Tabs.TabPane>

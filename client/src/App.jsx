@@ -57,6 +57,8 @@ function App() {
           }
         />
       </Routes>
+      {/*protected routes :- token is present in 
+      the local storage then only we have to render the home */}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+// storing the user data in this redux reducer
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
