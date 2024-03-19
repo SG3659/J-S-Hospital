@@ -4,6 +4,7 @@ import Layout from "../src/componnents/Layout";
 const Home = () => {
   const getData = async () => {
     try {
+      //  give a response 
       const response = await axios.post(
         "/api/user/get-user-info-by-id",
         {},
@@ -13,7 +14,7 @@ const Home = () => {
           },
         }
       );
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       console.log(error);
     }

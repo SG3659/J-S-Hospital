@@ -44,7 +44,9 @@ exports.register = async (req, res) => {
 };
 exports.login = async (req, res) => {
   try {
+    //fetch data
     const { email, password } = req.body;
+    //check user existence
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
@@ -69,6 +71,7 @@ exports.login = async (req, res) => {
     //const { password: pass, ...rest } = user;
     const { password: pass, ...rest } = user._doc; // not send the password
 
+    // store token in cookies
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
@@ -86,7 +89,7 @@ exports.login = async (req, res) => {
     });
   }
 };
-
+// sending all details of user accept pass
 exports.userinfo = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
@@ -99,7 +102,8 @@ exports.userinfo = async (req, res) => {
     } else {
       res.status(200).json({
         success: true,
-        data: user,
+        //data:{name:user.name,email: user.email}
+        data: user, // all login user data pass accept password
       });
     }
   } catch (error) {
@@ -132,7 +136,7 @@ exports.doctors = async (req, res) => {
         doctorId: newdoctor._id,
         name: newdoctor.firstName + " " + newdoctor.lastName,
       },
-      onClickPath:"/admin/doctors",
+      onClickPath: "/admin/doctors",
     });
 
     // useennotification update
@@ -147,6 +151,52 @@ exports.doctors = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Something went wrong",
+    });
+  }
+};
+
+exports.markseen = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body.userId });
+    const unseenNotifications = user.unseenNotifications;
+    const seenNotifications = user.seenNotifications; // Define seenNotifications here
+    seenNotifications.push(...unseenNotifications);
+    user.unseenNotifications = [];
+    user.seenNotifications = seenNotifications;
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+
+    return res.status(200).json({
+      success: true,
+      message: "Seen",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+exports.markdelete = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body.userId });
+    user.unseenNotifications = [];
+    user.seenNotifications = [];
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+    return res.status(200).json({
+      success: true,
+      message: "All Delete",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      data: updatedUser,
     });
   }
 };

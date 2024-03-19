@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
 const login = () => {
+  //const { loading } = useSelector((state) => state.alerts);
+  //console.log(loading) redux checking
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ const login = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault();
+    //backend connectivity 
     try {
       dispatch(showLoading());
       const response = await axios.post(
