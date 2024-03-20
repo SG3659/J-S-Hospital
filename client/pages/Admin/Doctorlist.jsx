@@ -24,6 +24,29 @@ export const Doctorlist = () => {
       console.log(error);
     }
   };
+  const statusHandler = async (record, status) => {
+    try {
+      const response = await axios.post(
+        "/api/admin/change-Account-status",
+        {
+          doctorId: record._id,
+          userId: record.userId,
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      if(response.data.success){
+        toast.success(response.data.message)
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -46,11 +69,8 @@ export const Doctorlist = () => {
       render: (text, record) => (
         <div>
           {record.status === "pending" ? (
-            <button
-              className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95
-            disabled:opacity-80"
-            >
-              Approve
+            <button onClick={() => statusHandler(record, "approved")}>
+              Approved
             </button>
           ) : (
             <button>Reject</button>
