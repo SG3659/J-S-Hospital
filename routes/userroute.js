@@ -17,4 +17,7 @@ router.post("/get-user-info-by-id", authMiddleware, userinfo);
 router.post("/applydoctor", authMiddleware, doctors);
 router.post("/mark-all-notification-seen", markseen);
 router.post("/mark-all-notification-delete", markdelete);
+
+
+
 module.exports = router;
