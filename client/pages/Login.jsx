@@ -38,6 +38,7 @@ const login = () => {
       dispatch(hideLoading());
       if (response.data.success) {
         //local storage created
+        toast.success(response.data.message)
         localStorage.setItem("token", response.data.data);
         navigate("/");
       } else {

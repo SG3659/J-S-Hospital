@@ -27,15 +27,15 @@ export const adminmenu = [
     title: "Home",
   },
   {
-    id:"users",
-    title:"Users",
-    path:"/users"
+    id: "users",
+    title: "Users",
+    path: "/admin/users",
   },
   {
-    id:"doctors",
-    title:"Doctors",
-    path:"/doctors"
+    id: "doctors",
+    title: "Doctors",
+    path: "/admin/doctors",
   },
-  
 ];
+
 

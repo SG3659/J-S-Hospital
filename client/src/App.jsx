@@ -8,6 +8,8 @@ import Spinner from "./componnents/Spinner";
 import { useSelector } from "react-redux";
 import { Applydoctor } from "../pages/Applydoctor";
 import Notification from "../pages/Notification";
+import { Userlist } from "../pages/Admin/Userlist";
+import { Doctorlist } from "../pages/Admin/Doctorlist";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -53,6 +55,23 @@ function App() {
           element={
             <ProtectedRoute>
               <Notification />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute>
+              <Userlist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/doctors"
+          element={
+            <ProtectedRoute>
+              <Doctorlist />
             </ProtectedRoute>
           }
         />

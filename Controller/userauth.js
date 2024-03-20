@@ -2,7 +2,8 @@ const User = require("../Model/userModel");
 const Doctor = require("../Model/doctormodel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-exports.register = async (req, res) => {
+
+exports.register = async (req, res, next) => {
   try {
     //fetch  data
     const { username, email, password } = req.body;
@@ -35,14 +36,10 @@ exports.register = async (req, res) => {
       message: "User created successfully ",
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: "User cannot be registered, please try again later",
-    });
+    next(error);
   }
 };
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
     //fetch data
     const { email, password } = req.body;
@@ -55,42 +52,35 @@ exports.login = async (req, res) => {
       });
     }
     // checking the pass word
-    const storedHashedPassword = user.password;
-    const isPasswordValid = await bcrypt.compareSync(
-      password,
-      storedHashedPassword
-    );
+    const isPasswordValid = await bcrypt.compareSync(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
         message: "Invalid password",
       });
-    }
-    // token generate
-    const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN);
-    //const { password: pass, ...rest } = user;
-    const { password: pass, ...rest } = user._doc; // not send the password
+    } else {
+      // token generate
+      const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN);
+      //const { password: pass, ...rest } = user;
+      const { password: pass, ...rest } = user._doc; // not send the password
 
-    // store token in cookies
-    res
-      .cookie("access_token", token, { httpOnly: true })
-      .status(200)
-      .json({
-        success: true,
-        message: "LoggedIN",
-        data: token,
-        ...rest,
-      });
+      // store token in cookies
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json({
+          success: true,
+          message: "LoggedIn",
+          data: token,
+          ...rest,
+        });
+    }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: "User cannot be login, please try again later",
-    });
+    next(error);
   }
 };
 // sending all details of user accept pass
-exports.userinfo = async (req, res) => {
+exports.userinfo = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
     user.password = undefined;
@@ -107,14 +97,11 @@ exports.userinfo = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error getting user info ",
-    });
+    next(error);
   }
 };
 
-exports.doctors = async (req, res) => {
+exports.doctors = async (req, res, next) => {
   try {
     const newdoctor = new Doctor({ ...req.body, status: "pending" });
     await newdoctor.save();
@@ -147,19 +134,15 @@ exports.doctors = async (req, res) => {
       message: "Doctor account applied Successfully",
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-    });
+    next(error);
   }
 };
 
-exports.markseen = async (req, res) => {
+exports.markseen = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
     const unseenNotifications = user.unseenNotifications;
-    const seenNotifications = user.seenNotifications; // Define seenNotifications here
+    const seenNotifications = user.seenNotifications;
     seenNotifications.push(...unseenNotifications);
     user.unseenNotifications = [];
     user.seenNotifications = seenNotifications;
@@ -171,15 +154,11 @@ exports.markseen = async (req, res) => {
       message: "Seen",
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-    });
+    next(error);
   }
 };
 
-exports.markdelete = async (req, res) => {
+exports.markdelete = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
     user.unseenNotifications = [];
@@ -192,11 +171,6 @@ exports.markdelete = async (req, res) => {
       data: updatedUser,
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      data: updatedUser,
-    });
+    next(error);
   }
 };
