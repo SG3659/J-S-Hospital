@@ -26,3 +26,25 @@ exports.getdoctors = async (req, res, next) => {
     next(error);
   }
 };
+exports.accountstatus = async (req, res, next) => {
+  try {
+    const { doctorId, status } = req.body;
+    const doctor = await Doctor.findByIdAndUpdate(doctorId, { status });
+    const user = await User.findOne({ _id: doctor.userId });
+    const unseenNotifications = user.unseenNotifications;
+    unseenNotifications.push({
+      type: "doctor-account-request-updated",
+      message: `Your Doctor Account Request Has ${status} `,
+      onClickPath: "/notification",
+    });
+    user.isDoctor === "aprroved" ? true : false;
+    user.save();
+    res.status(201).json({
+      success: true,
+      message: "Status Updated",
+      data: doctor,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
