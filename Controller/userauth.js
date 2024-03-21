@@ -46,7 +46,7 @@ exports.login = async (req, res, next) => {
     //check user existence
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({
+      return res.status(401).send({
         success: false,
         message: "Invalid email",
       });
@@ -54,7 +54,7 @@ exports.login = async (req, res, next) => {
     // checking the pass word
     const isPasswordValid = await bcrypt.compareSync(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({
+      return res.status(401).send({
         success: false,
         message: "Invalid password",
       });
@@ -68,7 +68,7 @@ exports.login = async (req, res, next) => {
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
-        .json({
+        .send({
           success: true,
           message: "LoggedIn",
           data: token,

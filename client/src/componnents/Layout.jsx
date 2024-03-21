@@ -7,7 +7,7 @@ import { FaBell } from "react-icons/fa";
 
 import { useSelector } from "react-redux";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   const { user } = useSelector((state) => state.user); // show email on ui (get login person all details)
   const [toggle, setToggle] = useState(false);
   const menuToBeRendered = user?.isAdmin ? adminmenu : userMenu; // check login is admin aur user
@@ -77,6 +77,7 @@ const Layout = ({children}) => {
       <div className="p-1 mt-1 px-20 border border-gray-400 rounded-xl flex flex-wrap gap-4">
         <div className="notification-badge-container">
           <FaBell
+            className="cursor-pointer"
             fontSize={23}
             onClick={() => {
               navigate("/notification");
