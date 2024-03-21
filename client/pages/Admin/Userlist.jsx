@@ -45,7 +45,7 @@ export const Userlist = () => {
     {
       title: "Doctor",
       id: "isDoctor",
-      render: (record) => <span>{record.isDoctor ? "Yes" : "No"}</span>,
+      render: (text, record) => <span>{record.isDoctor ? "Yes" : "No"}</span>,
     },
     {
       title: "Action",

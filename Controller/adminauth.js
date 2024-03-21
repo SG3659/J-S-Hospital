@@ -37,8 +37,8 @@ exports.accountstatus = async (req, res, next) => {
       message: `Your Doctor Account Request Has ${status} `,
       onClickPath: "/notification",
     });
-    user.isDoctor === "aprroved" ? true : false;
-    user.save();
+    user.isDoctor = status === "aprroved" ? true : false;
+    await user.save();
     res.status(201).json({
       success: true,
       message: "Status Updated",
