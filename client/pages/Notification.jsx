@@ -78,8 +78,8 @@ const Notification = () => {
           {user?.unseenNotifications.map((notification) => (
             <div
               key={notification.index}
-              className="p-2 cursor-pointer"
-              onClick={() => navigate("/admin/doctors")}
+              className={"p-2 cursor-pointer"}
+              onClick={user?.isAdmin ? () => navigate("/admin/doctors") : ""}
             >
               <div className="border border-solid border-black p-1 rounded-xl ">
                 {notification.message}
@@ -94,7 +94,15 @@ const Notification = () => {
             </h1>
           </div>
           {user?.seenNotifications.map((notification) => (
-            <div key={notification.index} className="p-2  cursor-pointer">
+            <div
+              key={notification.index}
+              className="p-2  cursor-pointer"
+              onClick={
+                user?.isAdmin
+                  ? () => navigate("/admin/doctors")
+                  : () => navigate("/")
+              }
+            >
               <div className="border border-solid border-black p-1 rounded-xl ">
                 {notification.message}
               </div>

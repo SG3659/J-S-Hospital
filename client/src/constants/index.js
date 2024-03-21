@@ -37,3 +37,4 @@ export const adminmenu = [
     path: "/admin/doctors",
   },
 ];
+

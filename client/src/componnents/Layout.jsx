@@ -10,8 +10,29 @@ import { useSelector } from "react-redux";
 const Layout = ({ children }) => {
   const { user } = useSelector((state) => state.user); // show email on ui (get login person all details)
   const [toggle, setToggle] = useState(false);
-  const menuToBeRendered = user?.isAdmin ? adminmenu : userMenu; // check login is admin aur user
   const navigate = useNavigate();
+  const doctorMenu = [
+    {
+      id: "home",
+      path: "/",
+      title: "Home",
+    },
+    {
+      id: "appointments",
+      path: "/appointments",
+      title: "Appointments",
+    },
+    {
+      id: "profile",
+      path: `/doctor/Profile/${user?._id}`,
+    },
+  ];
+  const menuToBeRendered = user?.isAdmin
+    ? adminmenu
+    : user?.isDoctor
+    ? doctorMenu
+    : userMenu;
+
   return (
     <div>
       <nav className=" p-3 w-full z-20  bg-green-500 flex items-center  rounded-2xl">
@@ -96,7 +117,9 @@ const Layout = ({ children }) => {
             <span>Welcome Admin!</span> {user?.email}
           </Link>
         ) : (
-          <Link to="/profile">
+          <Link
+            to={user?.isDoctor ? `/doctor/Profile/${user?._id}` : "/profile"}
+          >
             <span>Welcome!</span> {user?.email}
           </Link>
         )}

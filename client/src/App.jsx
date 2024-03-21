@@ -10,6 +10,7 @@ import { Applydoctor } from "../pages/Applydoctor";
 import Notification from "../pages/Notification";
 import { Userlist } from "../pages/Admin/Userlist";
 import { Doctorlist } from "../pages/Admin/Doctorlist";
+import Profile from "../pages/Doctor/Profile";
 
 
 function App() {
@@ -73,6 +74,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Doctorlist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctor/Profile/:id"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
