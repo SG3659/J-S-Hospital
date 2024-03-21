@@ -25,6 +25,7 @@ export const Userlist = () => {
         setUsers(response.data.data);
         toast.success(response.data.message);
       }
+      window.location.reload;
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +35,7 @@ export const Userlist = () => {
   }, []);
   const usercolumns = [
     {
-      title: "Name",
+      title: "Namee",
       id: "username",
     },
     {
@@ -44,18 +45,19 @@ export const Userlist = () => {
     {
       title: "Doctor",
       id: "isDoctor",
-      render: (text, record) => <span>{record.isDoctor ? "Yes" : "No"}</span>,
+      render: (record) => <span>{record.isDoctor ? "Yes" : "No"}</span>,
     },
     {
       title: "Action",
       id: "action",
-      render: (text, record) => (
+      render: () => (
         <div>
-          <button>block</button>
+          <button>Block</button>
         </div>
       ),
     },
   ];
+
   return (
     <Layout>
       <p className="text-3xl font-bold font-serif">User List </p>
@@ -81,6 +83,9 @@ export const Userlist = () => {
                   className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                 >
                   {userd[column.id]}
+                  {column.id === "action" || column.id === "isDoctor"
+                    ? column.render("", userd)
+                    : ""}
                 </td>
               ))}
             </tr>

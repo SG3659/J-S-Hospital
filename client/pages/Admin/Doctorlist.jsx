@@ -39,8 +39,8 @@ export const Doctorlist = () => {
           },
         }
       );
-      if(response.data.success){
-        toast.success(response.data.message)
+      if (response.data.success) {
+        toast.success(response.data.message);
         window.location.reload();
       }
     } catch (error) {
@@ -104,6 +104,7 @@ export const Doctorlist = () => {
                   className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                 >
                   {doctord[column.id]}
+                  {column.id === "action" ? column.render("", doctord) : ""}
                 </td>
               ))}
             </tr>
