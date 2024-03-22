@@ -174,3 +174,16 @@ exports.markdelete = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllDocotrsController = async (req, res, next) => {
+  try {
+    const doctors = await Doctor.find({ status: "approved" });
+    res.status(200).json({
+      success: true,
+      message: "Doctor List fetched ",
+      data: doctors,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
