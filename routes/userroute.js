@@ -7,6 +7,7 @@ const {
   doctors,
   markseen,
   markdelete,
+  getAllDocotrsController,
 } = require("../Controller/userauth");
 
 const { authMiddleware } = require("../middlewares/authMiddleware");
@@ -22,7 +23,7 @@ router.post("/applydoctor", authMiddleware, doctors);
 router.post("/mark-all-notification-seen", markseen);
 //Notifiaction  Doctor || POST
 router.post("/mark-all-notification-delete", markdelete);
-
-
+// GET All DOC
+router.get("/getAllDoctors", authMiddleware, getAllDocotrsController);
 
 module.exports = router;
