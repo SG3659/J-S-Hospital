@@ -27,3 +27,17 @@ exports.updateprofile = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getdoctorid=async(req,res,next)=>{
+  try {
+    const doctor = await Doctor.findOne(
+      { _id: req.body.doctorId });
+    res.status(200).json({
+      success: true,
+      message: "single doc   successfully",
+      data: doctor,
+    });
+  } catch (error) {
+    next(error);
+  } 
+}

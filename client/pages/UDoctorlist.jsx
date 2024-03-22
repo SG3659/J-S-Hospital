@@ -40,7 +40,7 @@ const UDoctorlist = () => {
               </div>
               <div>
                 <p>
-                  <b>Specialization</b>:{doctor.specialization}
+                  <b>Profession</b>:{doctor.profession}
                 </p>
                 <p>
                   <b>Experience</b>: {doctor.experience}
