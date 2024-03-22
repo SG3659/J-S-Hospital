@@ -71,7 +71,7 @@ const Profile = () => {
       [e.target.name]: e.target.value,
     });
   }
-  const submitHandler = async (e) => {
+  const updateHandler = async (e) => {
     e.preventDefault();
     try {
       dispatch(showLoading());
@@ -106,7 +106,7 @@ const Profile = () => {
       {doctor && (
         <form
           className="flex flex-wrap gap-16 mt-5 p-7"
-          onSubmit={submitHandler}
+          onSubmit={updateHandler}
         >
           <label className="flex flex-col">
             FirstName:
