@@ -1,5 +1,6 @@
 const User = require("../Model/userModel");
 const Doctor = require("../Model/doctormodel");
+const Appointment = require("../Model/appointmentModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -185,5 +186,30 @@ exports.getAllDocotrsController = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+};
+exports.bookeAppointmnet = async (req, res, next) => {
+  try {
+    req.body.status = "pending";
+    const newAppointment = new Appointment(req.body);
+    await newAppointment.save();
+    const user = await User.findOne({ _id: req.body.doctorInfo.userId });
+    user.unseenNotifications.push({
+      type: "New Appointment Request",
+      message: `A new Appointment from ${req.body.userInfo.username}`,
+      onClickPath: "/user/appointments",
+    });
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Appointment book successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error While Booking Appointment",
+    });
   }
 };
