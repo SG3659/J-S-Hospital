@@ -2,21 +2,15 @@ import { useState, useEffect } from "react";
 import Layout from "../src/componnents/Layout";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+
 const Bookingpage = () => {
+  const { user } = useSelector((state) => state.user);
+  const [time, setTime] = useState();
+  const [date, setDate] = useState("");
   const [doctor, setDoctor] = useState([]);
-  const [isAvailable, setIsAvailable] = useState(false);
   const params = useParams();
-  const [formData, setformData] = useState({
-    date: "",
-    fromTime: "",
-    toTime: "",
-  });
-  function changeHandler(e) {
-    setformData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
   const getData = async () => {
     try {
       //  give a response
@@ -37,12 +31,39 @@ const Bookingpage = () => {
       console.log(error);
     }
   };
+
+  const bookingHandler = async () => {
+    try {
+      const response = await axios.post(
+        "/api/user/bookappointment",
+        {
+          doctorId: params.doctorId,
+          userId: user._id,
+          doctorInfo: doctor,
+          userInfo: user,
+          date: date,
+          time: time,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      // console.log(response.data);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getData();
   }, []);
   return (
     <Layout>
-      <p className="text-3xl font-bold font-serif"> Booking-Page</p>
+      <p className="text-3xl font-bold font-serif "> Booking-Page</p>
       <div className="mt-4 ">
         {doctor && (
           <div className="p-4 max-w-lg mx-auto border-2 rounded-xl flex flex-col items-center">
@@ -55,51 +76,41 @@ const Bookingpage = () => {
               <b>Timings</b>
               {doctor.fromTime}-{doctor.toTime}
             </p>
-            <div className="mt-4">
-              <form>
-                <label className="flex flex-col">
-                  Appointment Day:
-                  <input
-                    className="border p-1 rounded-lg focus:outline-none w-72"
-                    type="date"
-                    required
-                    name="date"
-                    onChange={changeHandler}
-                    value={formData.date}
-                  />
-                </label>
-                <label className="flex flex-col">
-                  from time:
-                  <input
-                    className="border p-1 rounded-lg focus:outline-none w-72"
-                    type="time"
-                    required
-                    name="fromTime"
-                    onChange={changeHandler}
-                    value={formData.fromTime}
-                  />
-                </label>
-                <label className="flex flex-col">
-                  to time:
-                  <input
-                    className="border p-1 rounded-lg focus:outline-none w-72"
-                    type="time"
-                    required
-                    name="toTime"
-                    onChange={changeHandler}
-                    value={formData.toTime}
-                  />
-                </label>
-              </form>
+            <div className="mt-4 w-full">
+              <label className="flex flex-col">
+                Appointment Day:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none "
+                  type="date"
+                  required
+                  value={date}
+                  onChange={(e) => {
+                    setDate(e.target.value);
+                  }}
+                />
+              </label>
+              <label className="flex flex-col mt-1">
+                Appointment Time:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none "
+                  type="time"
+                  required
+                  name="time"
+                  onChange={(e) => {
+                    setTime(e.target.value);
+                  }}
+                />
+              </label>
               <button
                 className="border  p-2 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
-        disabled:opacity-80  mt-7 "
+                  disabled:opacity-80  mt-7 "
               >
                 Check Availability
               </button>
               <button
                 className="border  p-2 rounded-lg bg-slate-700 text-white hover:opacity-95  w-full text-center
-        disabled:opacity-80  mt-4 "
+                  disabled:opacity-80  mt-4 "
+                onClick={bookingHandler}
               >
                 Book Now
               </button>
