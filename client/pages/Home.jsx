@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import axios from "axios";
 import Layout from "../src/componnents/Layout";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Home = () => {
-  const navigate=useNavigate();
+  const { user } = useSelector((state) => state.user); // show email on ui (get login person all details)
+
+  const navigate = useNavigate();
   const getData = async () => {
     try {
       //  give a response
@@ -27,13 +30,19 @@ const Home = () => {
   return (
     <Layout>
       <h1>Home page</h1>
-      <button
-        className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
-        disabled:opacity-80  mt-7 "
-        onClick={()=>navigate("/doctorlist")}
-      >
-        Doctors-List
-      </button>
+      {user?.isAdmin ? (
+        ""
+      ) : user?.isDoctor ? (
+        ""
+      ) : (
+        <button
+          className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
+      disabled:opacity-80  mt-7 "
+          onClick={() => navigate("/doctorlist")}
+        >
+          Doctors-List
+        </button>
+      )}
     </Layout>
   );
 };
