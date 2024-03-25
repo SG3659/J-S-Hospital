@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import Layout from "../src/componnents/Layout";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { showLoading, hideLoading } from "../src/redux/alertSlice";
 
 const Bookingpage = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [time, setTime] = useState();
   const [date, setDate] = useState("");
   const [doctor, setDoctor] = useState([]);
+  
   const params = useParams();
   const getData = async () => {
     try {
@@ -34,6 +37,7 @@ const Bookingpage = () => {
 
   const bookingHandler = async () => {
     try {
+      dispatch(showLoading());
       const response = await axios.post(
         "/api/user/bookappointment",
         {
@@ -50,6 +54,32 @@ const Bookingpage = () => {
           },
         }
       );
+      dispatch(hideLoading());
+      // console.log(response.data);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const availableHandler = async () => {
+    try {
+      dispatch(showLoading());
+      const response = await axios.post(
+        "/api/user/checkAvailability",
+        {
+          doctorId: params.doctorId,
+          date,
+          time,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      dispatch(hideLoading());
       // console.log(response.data);
       if (response.data.success) {
         toast.success(response.data.message);
@@ -104,6 +134,7 @@ const Bookingpage = () => {
               <button
                 className="border  p-2 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
                   disabled:opacity-80  mt-7 "
+                onClick={availableHandler}
               >
                 Check Availability
               </button>

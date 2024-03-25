@@ -3,6 +3,7 @@ const Doctor = require("../Model/doctormodel");
 const Appointment = require("../Model/appointmentModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
 
 exports.register = async (req, res, next) => {
   try {
@@ -188,8 +189,10 @@ exports.getAllDocotrsController = async (req, res, next) => {
     next(error);
   }
 };
-exports.bookeAppointmnet = async (req, res, next) => {
+exports.bookeAppointment = async (req, res, next) => {
   try {
+    req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    req.body.time = moment(req.body.time, "HH:mm").toISOString();
     req.body.status = "pending";
     const newAppointment = new Appointment(req.body);
     await newAppointment.save();
@@ -205,11 +208,39 @@ exports.bookeAppointmnet = async (req, res, next) => {
       message: "Appointment book successfully",
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      error,
-      message: "Error While Booking Appointment",
+    next(error);
+  }
+};
+
+exports.checkAvailability = async (req, res, next) => {
+  try {
+    const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    const fromtime = moment(req.body.time, "HH:mm")
+      .subtract(1, "hours")
+      .toISOString();
+    const totime = moment(req.body.time, "HH:mm").add(1, "hours").toISOString();
+    const doctorId = req.body.doctorId;
+    const appointments = await Appointment.find({
+      doctorId,
+      date,
+      time: {
+        $gte: fromtime,
+        $lte: totime,
+      },
     });
+
+    if (appointments.length > 0) {
+      return res.status(200).json({
+        message: "Appointments not Available at this time",
+        success: true,
+      });
+    } else {
+      return res.status(200).json({
+        message: "Appointments Available ",
+        success: true,
+      });
+    }
+  } catch (error) {
+    next(error);
   }
 };
