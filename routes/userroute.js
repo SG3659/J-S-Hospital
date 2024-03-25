@@ -8,7 +8,8 @@ const {
   markseen,
   markdelete,
   getAllDocotrsController,
-  bookeAppointmnet,
+  bookeAppointment,
+  checkAvailability,
 } = require("../Controller/userauth");
 
 const { authMiddleware } = require("../middlewares/authMiddleware");
@@ -27,6 +28,9 @@ router.post("/mark-all-notification-delete", markdelete);
 // GET All DOC
 router.get("/getAllDoctors", authMiddleware, getAllDocotrsController);
 // Booke Appointment
-router.post("/bookappointment", authMiddleware, bookeAppointmnet);
+router.post("/bookappointment", authMiddleware, bookeAppointment);
+// appointment availability
+router.post("/checkAvailability", authMiddleware, checkAvailability);
+// user Appointment list
 
 module.exports = router;
