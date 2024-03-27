@@ -244,3 +244,19 @@ exports.checkAvailability = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.userAppointments = async (req, res, next) => {
+  try {
+    const appointment = await Appointment.find({
+      userId: req.body.userId,
+    });
+    res.status(200).json({
+      success:true,
+      message:"Appointment fetch successfully",
+      data:appointment,
+    })
+
+  } catch (error) {
+    next(error);
+  }
+};

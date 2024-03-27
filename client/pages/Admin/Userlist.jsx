@@ -35,7 +35,7 @@ export const Userlist = () => {
   }, []);
   const usercolumns = [
     {
-      title: "Namee",
+      title: "Name",
       id: "username",
     },
     {
