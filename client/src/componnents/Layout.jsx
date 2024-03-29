@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
     },
     {
       id: "appointments",
-      path: "/appointments",
+      path: "/doctor/appointments",
       title: "Appointments",
     },
     {

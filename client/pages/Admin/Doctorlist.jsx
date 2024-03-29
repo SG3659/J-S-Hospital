@@ -73,7 +73,9 @@ export const Doctorlist = () => {
               Approved
             </button>
           ) : (
-            <button>Reject</button>
+            <button onClick={() => statusHandler(record, "reject")}>
+              Reject
+            </button>
           )}
         </div>
       ),
