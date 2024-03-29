@@ -251,11 +251,10 @@ exports.userAppointments = async (req, res, next) => {
       userId: req.body.userId,
     });
     res.status(200).json({
-      success:true,
-      message:"Appointment fetch successfully",
-      data:appointment,
-    })
-
+      success: true,
+      message: "Appointment fetch successfully",
+      data: appointment,
+    });
   } catch (error) {
     next(error);
   }

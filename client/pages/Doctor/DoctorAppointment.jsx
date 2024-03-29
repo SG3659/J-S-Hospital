@@ -1,8 +1,9 @@
-import Layout from "../src/componnents/Layout";
+import Layout from "../../src/componnents/Layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-const Appiontments = () => {
+import { toast } from "react-hot-toast";
+const DoctorAppiontments = () => {
   const [appointments, setAppointments] = useState([]);
   const columns = [
     {
@@ -23,10 +24,23 @@ const Appiontments = () => {
       title: "Status",
       id: "status",
     },
+    {
+      title: "Actions",
+      id: "action",
+      render: (text, record) => (
+        <div>
+          {record.status === "pending" ? (
+            <button onClick={() => statusHandler(record, "approved")}>Approved</button>
+          ) : (
+            <button onClick={() => statusHandler(record, "reject")}>Reject</button>
+          )}
+        </div>
+      ),
+    },
   ];
   const getData = async () => {
     try {
-      const response = await axios.get("/api/user/user-appointments", {
+      const response = await axios.get("/api/doctor/doctor-appointment", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -43,10 +57,33 @@ const Appiontments = () => {
   useEffect(() => {
     getData();
   }, []);
+  
+  const statusHandler = async (record, status) => {
+    try {
+      const response = await axios.post(
+        "/api/doctor/docupdate-status",
+        {
+          appointmentsId: record._id, status
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Layout>
-      <p className="text-3xl font-bold font-serif">Appointments List</p>
-      <table className="min-w-full divide-y divide-gray-200 rounded-xl mt-6 ">
+      <p className="text-3xl font-bold font-serif">Doctor Appointments List</p>
+
+      <table className="min-w-full divide-y divide-gray-200 rounded-xl mt-6">
         <thead className="bg-gray-300">
           <tr>
             {columns.map((list) => (
@@ -60,17 +97,15 @@ const Appiontments = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {appointments.map((appointmentd, appointmentIndex) => (
+          {appointments.map((appointment, appointmentIndex) => (
             <tr key={appointmentIndex}>
               {columns.map((column) => (
                 <td
-                  key={`${column.index}-${column.id}`}
+                  key={`${column.id}-${appointmentIndex}`}
                   className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                 >
-                  {appointmentd[column.id]}
-                  {column.id === "action"
-                    ? column.render("", appointmentd)
-                    : ""}
+                  {appointment[column.id]}
+                  {column.id === "action" ? column.render("", appointment) : ""}
                 </td>
               ))}
             </tr>
@@ -81,4 +116,4 @@ const Appiontments = () => {
   );
 };
 
-export default Appiontments;
+export default DoctorAppiontments;
