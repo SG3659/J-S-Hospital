@@ -23,7 +23,7 @@ const login = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault();
-    //backend connectivity 
+    //backend connectivity
     try {
       dispatch(showLoading());
       const response = await axios.post(
@@ -38,7 +38,7 @@ const login = () => {
       dispatch(hideLoading());
       if (response.data.success) {
         //local storage created
-        toast.success(response.data.message)
+        toast.success(response.data.message);
         localStorage.setItem("token", response.data.data);
         navigate("/");
       } else {
@@ -46,7 +46,6 @@ const login = () => {
       }
     } catch (error) {
       dispatch(hideLoading());
-      toast.error("Something went wrong");
     }
   };
 
