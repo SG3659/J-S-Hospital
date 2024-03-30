@@ -29,10 +29,15 @@ const DoctorAppiontments = () => {
       id: "action",
       render: (text, record) => (
         <div>
-          {record.status === "pending" ? (
-            <button onClick={() => statusHandler(record, "approved")}>Approved</button>
-          ) : (
-            <button onClick={() => statusHandler(record, "reject")}>Reject</button>
+          {record.status === "pending" && (
+            <div className="flex fl">
+              <button onClick={() => statusHandler(record, "approved")}>
+                Approved
+              </button>
+              <button onClick={() => statusHandler(record, "reject")}>
+                Reject
+              </button>
+            </div>
           )}
         </div>
       ),
@@ -57,13 +62,14 @@ const DoctorAppiontments = () => {
   useEffect(() => {
     getData();
   }, []);
-  
+
   const statusHandler = async (record, status) => {
     try {
       const response = await axios.post(
         "/api/doctor/docupdate-status",
         {
-          appointmentsId: record._id, status
+          appointmentsId: record._id,
+          status,
         },
         {
           headers: {
