@@ -10,7 +10,7 @@ exports.register = async (req, res, next) => {
     //fetch  data
     const { username, email, password } = req.body;
     // user already exists
-    const userexisting = await User.findOne({ email });
+    const userexisting = await User.find({ email });
     if (userexisting) {
       return res.status(500).json({
         success: false,
@@ -20,7 +20,7 @@ exports.register = async (req, res, next) => {
     // pass secure
     let hashpass;
     try {
-      hashpass = await bcrypt.hashSync(password, 10);
+      hashpass = await bcrypt.hash(password, 10);
     } catch (error) {
       return res.status(500).json({
         success: false,
@@ -54,7 +54,7 @@ exports.login = async (req, res, next) => {
       });
     }
     // checking the pass word
-    const isPasswordValid = await bcrypt.compareSync(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).send({
         success: false,
@@ -79,6 +79,56 @@ exports.login = async (req, res, next) => {
     }
   } catch (error) {
     next(error);
+  }
+};
+exports.google = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      const token = jwt.sign({ id: user_id }, process.env.JWT_TOCKEN);
+      const { password: pass, ...rest } = user._doc;
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .send({
+          success: true,
+          message: "LoggedIn",
+          ...rest,
+        });
+    } else {
+      // create password
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      //hashing password
+      const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
+      // New user creating
+      const newUser = await User({
+        username:
+          req.body.username.split(" ").join("").toLowerCase() +
+          Math.random().toString(36).slice(-4),
+        email: req.body.email,
+        password: hashedPassword,
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser_id }, process.env.JWT_TOCKEN);
+      const { password: pass, ...rest } = newUser._doc;
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .send({
+          success: true,
+          message: "LoggedIn",
+          data: token,
+          ...rest,
+        });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: `Register Controller ${error.message}`,
+    });
   }
 };
 // sending all details of user accept pass

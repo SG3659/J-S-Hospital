@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
+import OAuth from "../src/componnents/OAuth";
 const login = () => {
   //const { loading } = useSelector((state) => state.alerts);
   //console.log(loading) redux checking
@@ -91,6 +92,7 @@ const login = () => {
         >
           LOGIN
         </button>
+        <OAuth />
       </form>
       <div className="mt-5 flex gap-2">
         <p>Don't Have an account?</p>

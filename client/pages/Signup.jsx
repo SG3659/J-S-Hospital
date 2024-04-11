@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {  useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
+import OAuth from "../src/componnents/OAuth";
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -97,6 +98,7 @@ const Signup = () => {
         >
           Register
         </button>
+        <OAuth/>
       </form>
       <div className="mt-5 flex gap-2">
         <p>Have an account?</p>
