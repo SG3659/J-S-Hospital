@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   register,
   login,
+  google,
   userinfo,
   doctors,
   markseen,
@@ -18,6 +19,8 @@ const { authMiddleware } = require("../middlewares/authMiddleware");
 router.post("/register", register);
 //REGISTER || POST
 router.post("/login", login);
+// Post signin eith google
+router.post("/google", google);
 // send email & name to the user after login
 router.post("/get-user-info-by-id", authMiddleware, userinfo);
 //Apply  Doctor || POST
