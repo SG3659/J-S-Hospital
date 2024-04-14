@@ -15,6 +15,7 @@ import UDoctorlist from "../pages/UDoctorlist";
 import Bookingpage from "../pages/Bookingpage";
 import Appiontments from "../pages/Appiontments";
 import DoctorAppointments from "../pages/Doctor/DoctorAppointment";
+
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
