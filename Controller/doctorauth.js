@@ -1,7 +1,7 @@
 const Appointment = require("../Model/appointmentModel");
 const Doctor = require("../Model/doctormodel");
 const User = require("../Model/userModel");
-exports.getdoctorinfo = async (req, res, next) => {
+exports.getdoctorinfo = async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ userId: req.body.userId });
     res.status(200).json({
@@ -10,10 +10,14 @@ exports.getdoctorinfo = async (req, res, next) => {
       data: doctor,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
-exports.updateprofile = async (req, res, next) => {
+exports.updateprofile = async (req, res) => {
   try {
     const doctor = await Doctor.findOneAndUpdate(
       { userId: req.body.userId },
@@ -25,11 +29,15 @@ exports.updateprofile = async (req, res, next) => {
       data: doctor,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 
-exports.getdoctorid = async (req, res, next) => {
+exports.getdoctorid = async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ _id: req.body.doctorId });
     res.status(200).json({
@@ -38,11 +46,15 @@ exports.getdoctorid = async (req, res, next) => {
       data: doctor,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 
-exports.gedoctorappointment = async (req, res, next) => {
+exports.gedoctorappointment = async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ userId: req.body.userId });
     const appointment = await Appointment.find({ doctorId: doctor._id });
@@ -52,7 +64,11 @@ exports.gedoctorappointment = async (req, res, next) => {
       data: appointment,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 exports.docupdatestatus = async (req, res) => {
@@ -74,6 +90,10 @@ exports.docupdatestatus = async (req, res) => {
       message: "appointment updated successfully ",
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };

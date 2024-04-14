@@ -5,12 +5,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 
-exports.register = async (req, res, next) => {
+exports.register = async (req, res) => {
   try {
     //fetch  data
     const { username, email, password } = req.body;
     // user already exists
-    const userexisting = await User.find({ email });
+    const userexisting = await User.findOne({ email });
     if (userexisting) {
       return res.status(500).json({
         success: false,
@@ -20,7 +20,7 @@ exports.register = async (req, res, next) => {
     // pass secure
     let hashpass;
     try {
-      hashpass = await bcrypt.hash(password, 10);
+      hashpass = await bcrypt.hashSync(password, 10);
     } catch (error) {
       return res.status(500).json({
         success: false,
@@ -38,17 +38,21 @@ exports.register = async (req, res, next) => {
       message: "User created successfully ",
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "User cannot be registered, please try again later",
+    });
   }
 };
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     //fetch data
     const { email, password } = req.body;
     //check user existence
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).send({
+      return res.status(401).json({
         success: false,
         message: "Invalid email",
       });
@@ -56,7 +60,7 @@ exports.login = async (req, res, next) => {
     // checking the pass word
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).send({
+      return res.status(401).json({
         success: false,
         message: "Invalid password",
       });
@@ -70,7 +74,7 @@ exports.login = async (req, res, next) => {
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
-        .send({
+        .json({
           success: true,
           message: "LoggedIn",
           data: token,
@@ -78,61 +82,118 @@ exports.login = async (req, res, next) => {
         });
     }
   } catch (error) {
-    next(error);
-  }
-};
-exports.google = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      const token = jwt.sign({ id: user_id }, process.env.JWT_TOCKEN);
-      const { password: pass, ...rest } = user._doc;
-      res
-        .cookie("access_token", token, { httpOnly: true })
-        .status(200)
-        .send({
-          success: true,
-          message: "LoggedIn",
-          ...rest,
-        });
-    } else {
-      // create password
-      const generatedPassword =
-        Math.random().toString(36).slice(-8) +
-        Math.random().toString(36).slice(-8);
-      //hashing password
-      const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
-      // New user creating
-      const newUser = await User({
-        username:
-          req.body.username.split(" ").join("").toLowerCase() +
-          Math.random().toString(36).slice(-4),
-        email: req.body.email,
-        password: hashedPassword,
-      });
-      await newUser.save();
-      const token = jwt.sign({ id: newUser_id }, process.env.JWT_TOCKEN);
-      const { password: pass, ...rest } = newUser._doc;
-      res
-        .cookie("access_token", token, { httpOnly: true })
-        .status(200)
-        .send({
-          success: true,
-          message: "LoggedIn",
-          data: token,
-          ...rest,
-        });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
+    console.error(error);
+    return res.status(500).json({
       success: false,
-      message: `Register Controller ${error.message}`,
+      message: "Something went wrong",
     });
   }
 };
+// exports.google = async (req, res, next) => {
+//   try {
+//     const user = await User.findOne({ email: req.body.email });
+//     if (user) {
+//       const token = jwt.sign({ id: user_id }, process.env.JWT_TOCKEN);
+//       const { password: pass, ...rest } = user._doc;
+//       res
+//         .cookie("access_token", token, { httpOnly: true })
+//         .status(200)
+//         .send({
+//           success: true,
+//           message: "LoggedIn",
+//           ...rest,
+//         });
+//     } else {
+//       // create password
+//       const generatedPassword =
+//         Math.random().toString(36).slice(-8) +
+//         Math.random().toString(36).slice(-8);
+//       //hashing password
+//       const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
+//       // New user creating
+//       const newUser = await User({
+//         username:
+//           req.body.username.split(" ").join("").toLowerCase() +
+//           Math.random().toString(36).slice(-4),
+//         email: req.body.email,
+//         password: hashedPassword,
+//       });
+//       await newUser.save();
+//       const token = jwt.sign({ id: newUser_id }, process.env.JWT_TOCKEN);
+//       const { password: pass, ...rest } = newUser._doc;
+//       res
+//         .cookie("access_token", token, { httpOnly: true })
+//         .status(200)
+//         .send({
+//           success: true,
+//           message: "LoggedIn",
+//           data: token,
+//           ...rest,
+//         });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       message: `Register Controller ${error.message}`,
+//     });
+//   }
+// };
+//email config
+// const transporter=nodemailer.createTransport({
+//   service:"gmail",
+//   auth:{
+//     user:process.env.EMAIL,
+//     pass:process.env.PASSWORD,
+//   }
+// })
+// // send email Link
+// exports.sendPasswordLink = async (req, res, next) => {
+//   try {
+//     const { email } = req.body;
+//     const userexists = await User.findOne({ email });
+//     if (userexists) {
+//       res.status(401).json({
+//         success: false,
+//         message: "Email does't exists",
+//       });
+//     }
+//     // token generate for reset password
+//     const token =jwt.sign({_id:userexists._id},process.env.JWT_TOCKEN,{expiresIn:"120s"})
+//     const setusertoken =await User.findByIdAndUpdate({_id:userexists._id},{verifytoken:token},{new:true})
+//     if(setusertoken){
+//       const mailOptions={
+//         from:process.env.EMAIL,
+//         to:email,
+//         subject:"Sending Email For password Reset",
+//         text:`This is valid for 2 MINUTES  http://localhost:5000/forgotpassword/${userexists.id}/${setusertoken.verifytoken}`
+//       }
+//       transporter.sendMail(mailOptions,(error, info)=>{
+//         if(error){
+//           console.log(error)
+//           res.status(401).json({
+//             success:false,
+//             message :"email not send",
+//           })
+//         }else{
+//           console.log(info.response)
+//           res.status(201).json({
+//             success:true,
+//             message:"Email send successfully",
+//           })
+//         }
+//       })
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       success:false,
+//       message:"Invalid user",
+//     })
+//   }
+// };
+
 // sending all details of user accept pass
-exports.userinfo = async (req, res, next) => {
+exports.userinfo = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
     user.password = undefined;
@@ -149,7 +210,11 @@ exports.userinfo = async (req, res, next) => {
       });
     }
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 
@@ -190,7 +255,7 @@ exports.doctors = async (req, res, next) => {
   }
 };
 
-exports.markseen = async (req, res, next) => {
+exports.markseen = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
     const unseenNotifications = user.unseenNotifications;
@@ -206,11 +271,15 @@ exports.markseen = async (req, res, next) => {
       message: "Seen",
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 
-exports.markdelete = async (req, res, next) => {
+exports.markdelete = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
     user.unseenNotifications = [];
@@ -223,11 +292,15 @@ exports.markdelete = async (req, res, next) => {
       data: updatedUser,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 
-exports.getAllDocotrsController = async (req, res, next) => {
+exports.getAllDocotrsController = async (req, res) => {
   try {
     const doctors = await Doctor.find({ status: "approved" });
     res.status(200).json({
@@ -236,10 +309,14 @@ exports.getAllDocotrsController = async (req, res, next) => {
       data: doctors,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
-exports.bookeAppointment = async (req, res, next) => {
+exports.bookeAppointment = async (req, res) => {
   try {
     req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
     req.body.time = moment(req.body.time, "HH:mm").toISOString();
@@ -258,11 +335,15 @@ exports.bookeAppointment = async (req, res, next) => {
       message: "Appointment book successfully",
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 
-exports.checkAvailability = async (req, res, next) => {
+exports.checkAvailability = async (req, res) => {
   try {
     const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
     const fromtime = moment(req.body.time, "HH:mm")
@@ -291,11 +372,15 @@ exports.checkAvailability = async (req, res, next) => {
       });
     }
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
 
-exports.userAppointments = async (req, res, next) => {
+exports.userAppointments = async (req, res) => {
   try {
     const appointment = await Appointment.find({
       userId: req.body.userId,
@@ -306,6 +391,10 @@ exports.userAppointments = async (req, res, next) => {
       data: appointment,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };

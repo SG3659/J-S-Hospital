@@ -9,7 +9,7 @@ function ProtectedRoute(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const getUser = async () => {
-    // token validation check  before login 
+    // token validation check  before login
     try {
       dispatch(showLoading());
       const response = await axios.post(
@@ -23,7 +23,7 @@ function ProtectedRoute(props) {
       );
       dispatch(hideLoading());
       if (response.data.success) {
-        dispatch(setUser(response.data.data));// passing the user data redux  
+        dispatch(setUser(response.data.data)); // passing the user data redux
       } else {
         localStorage.clear();
         navigate("/login");

@@ -1,6 +1,6 @@
 const User = require("../Model/userModel");
 const Doctor = require("../Model/doctormodel");
-exports.getusers = async (req, res, next) => {
+exports.getusers = async (req, res) => {
   try {
     const users = await User.find({});
     users.password = undefined;
@@ -10,10 +10,14 @@ exports.getusers = async (req, res, next) => {
       data: users,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
-exports.getdoctors = async (req, res, next) => {
+exports.getdoctors = async (req, res) => {
   try {
     const doctors = await Doctor.find({});
     doctors.password = undefined;
@@ -23,10 +27,14 @@ exports.getdoctors = async (req, res, next) => {
       data: doctors,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
-exports.accountstatus = async (req, res, next) => {
+exports.accountstatus = async (req, res) => {
   try {
     const { doctorId, status } = req.body;
     const doctor = await Doctor.findByIdAndUpdate(doctorId, { status });
@@ -45,6 +53,10 @@ exports.accountstatus = async (req, res, next) => {
       data: doctor,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };
