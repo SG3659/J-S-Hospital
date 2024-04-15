@@ -62,10 +62,10 @@ export const Applydoctor = () => {
       <p className="text-3xl font-bold font-serif">Apply Doctors</p>
       <hr className="border-black"></hr>
       <form className="flex flex-wrap gap-16 mt-5 p-7" onSubmit={submitHandler}>
-        <label className="flex flex-col">
+        <label className="flex flex-col ">
           FirstName:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72 "
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg "
             type="text"
             name="firstName"
             required
@@ -76,7 +76,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           LastName:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="text"
             required
             name="lastName"
@@ -87,7 +87,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Phone Number:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="number"
             required
             name="phoneNumber"
@@ -98,7 +98,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Address:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="text"
             required
             name="address"
@@ -110,7 +110,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Specialization:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="text"
             required
             name="specialization"
@@ -121,7 +121,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Profession:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="text"
             required
             name="profession"
@@ -132,7 +132,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Experience:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="number"
             required
             name="experience"
@@ -144,7 +144,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Website:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="text"
             required
             name="website"
@@ -155,7 +155,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Fee Per Visit:
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="number"
             required
             name="feePerConsultation"
@@ -166,7 +166,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Timings(from time):
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="time"
             required
             name="fromTime"
@@ -177,7 +177,7 @@ export const Applydoctor = () => {
         <label className="flex flex-col">
           Timings(to time):
           <input
-            className="border p-1 rounded-lg focus:outline-none w-72"
+            className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
             type="time"
             required
             name="toTime"

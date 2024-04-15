@@ -35,10 +35,10 @@ const Layout = ({ children }) => {
 
   return (
     <div>
-      <nav className=" p-3 w-full z-20  bg-green-500 flex items-center  rounded-2xl">
+      <nav className=" p-3 w-full z-20  flex items-center  rounded-2xl  bg-gradient-to-r from-rose-300 to-rose-400 shadow-lg opacity-60">
         <div className="w-full flex justify-between items-center max-w-7xl mx-auto ">
           <Link to="/">
-            <h1 className="font-bold w-15  object-contain text-2xl">
+            <h1 className="font-bold w-15  object-contain text-2xl text-black">
               JKG-Hospital
             </h1>
           </Link>
@@ -61,7 +61,7 @@ const Layout = ({ children }) => {
           </ul>
         </div>
         {/* menu for smartphone*/}
-        <div className="sm:hidden flex flex-wrap justify-end items-center">
+        <div className="sm:hidden flex flex-wrap justify-end items-center ">
           <img
             src={toggle ? close : menu}
             alt="menu"
@@ -71,7 +71,7 @@ const Layout = ({ children }) => {
           <div
             className={`${
               !toggle ? "hidden" : "flex"
-            } absolute p-6 top-9 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl bg-indigo-500`}
+            } absolute p-6 top-9 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl bg-rose-100`}
           >
             <ul className="list-none flex justify-end items-start flex-col gap-4 ">
               {menuToBeRendered.map((items) => (
@@ -95,7 +95,7 @@ const Layout = ({ children }) => {
           </div>
         </div>
       </nav>
-      <div className="p-1 mt-1 px-20 border border-gray-400 rounded-xl flex flex-wrap gap-4">
+      <div className="p-1 mt-1 px-4 md:px-20 border border-gray-400 rounded-xl flex flex-wrap gap-4">
         <div className="notification-badge-container">
           <FaBell
             className="cursor-pointer"
@@ -111,18 +111,19 @@ const Layout = ({ children }) => {
             </span>
           )}
         </div>
-
-        {user?.isAdmin ? (
-          <Link>
-            <span>Welcome Admin!</span> {user?.email}
-          </Link>
-        ) : (
-          <Link
-            to={user?.isDoctor ? `/doctor/Profile/${user?._id}` : "/profile"}
-          >
-            <span>Welcome!</span> {user?.email}
-          </Link>
-        )}
+        <div className="md:flex md:items-center">
+          {user?.isAdmin ? (
+            <Link>
+              <span>Welcome Admin!</span> {user?.username}
+            </Link>
+          ) : (
+            <Link
+              to={user?.isDoctor ? `/doctor/Profile/${user?._id}` : "/profile"}
+            >
+              <span>Welcome!</span> {user?.username}
+            </Link>
+          )}
+        </div>
       </div>
       <div className="border-yellow-700 mt-4 p-5  w-full mx-auto  rounded-xl ">
         {children}

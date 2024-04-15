@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
- background-color: #93C5FD;  
+ background-color: #eae9e9;
 }
 .notification-badge-container {
    position: relative;

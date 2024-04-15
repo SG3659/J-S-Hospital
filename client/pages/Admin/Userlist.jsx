@@ -61,13 +61,13 @@ export const Userlist = () => {
   return (
     <Layout>
       <p className="text-3xl font-bold font-serif">User List </p>
-      <table className="min-w-full divide-y divide-gray-200 rounded-xl mt-6 ">
+      <table className="min-w-full divide-y divide-gray-200  mt-6 shadow-lg">
         <thead className="bg-gray-300">
           <tr>
             {usercolumns.map((user) => (
               <th
                 key={user.id}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-xl"
               >
                 {user.title}
               </th>
@@ -80,7 +80,7 @@ export const Userlist = () => {
               {usercolumns.map((column) => (
                 <td
                   key={`${userd.index}-${column.id}`}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 rounded-xl"
                 >
                   {userd[column.id]}
                   {column.id === "action" || column.id === "isDoctor"

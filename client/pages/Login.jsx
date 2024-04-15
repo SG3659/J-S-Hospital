@@ -56,7 +56,7 @@ const login = () => {
       </h1>
       <form onSubmit={submitHandler} className="flex flex-col gap-3">
         <input
-          className="border p-3 rounded-lg focus:outline-none"
+          className="border p-3 rounded-lg focus:outline-none shadow-lg"
           type="email"
           placeholder="email"
           name="email"
@@ -66,7 +66,7 @@ const login = () => {
         />
         <label className="relative">
           <input
-            className=" border p-3 rounded-lg focus:outline-none w-full"
+            className=" border p-3 rounded-lg focus:outline-none w-full shadow-lg"
             type={showpass ? "text" : "password"}
             placeholder="password"
             name="password"

@@ -12,7 +12,7 @@ const Bookingpage = () => {
   const [time, setTime] = useState();
   const [date, setDate] = useState("");
   const [doctor, setDoctor] = useState([]);
-  
+
   const params = useParams();
   const getData = async () => {
     try {
@@ -110,7 +110,7 @@ const Bookingpage = () => {
               <label className="flex flex-col">
                 Appointment Day:
                 <input
-                  className="border p-1 rounded-lg focus:outline-none "
+                  className="border p-1 rounded-lg focus:outline-none  shadow-lg"
                   type="date"
                   required
                   value={date}
@@ -122,7 +122,7 @@ const Bookingpage = () => {
               <label className="flex flex-col mt-1">
                 Appointment Time:
                 <input
-                  className="border p-1 rounded-lg focus:outline-none "
+                  className="border p-1 rounded-lg focus:outline-none shadow-lg"
                   type="time"
                   required
                   name="time"

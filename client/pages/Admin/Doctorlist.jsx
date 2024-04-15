@@ -84,13 +84,13 @@ export const Doctorlist = () => {
   return (
     <Layout>
       <p className="text-3xl font-bold font-serif">Doctors List</p>
-      <table className="min-w-full divide-y divide-gray-200 rounded-xl mt-6 ">
+      <table className="min-w-full divide-y divide-gray-200 shadow-lg mt-6 ">
         <thead className="bg-gray-300">
           <tr>
             {doctorcolumns.map((doctor) => (
               <th
                 key={doctor.id}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-xl"
               >
                 {doctor.title}
               </th>
@@ -103,7 +103,7 @@ export const Doctorlist = () => {
               {doctorcolumns.map((column) => (
                 <td
                   key={`${doctord.index}-${column.id}`}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 rounded-xl"
                 >
                   {doctord[column.id]}
                   {column.id === "action" ? column.render("", doctord) : ""}

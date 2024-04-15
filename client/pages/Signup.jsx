@@ -45,9 +45,9 @@ const Signup = () => {
       <h1 className="text-3xl my-7 text-center text-white font-semibold bg-orange-400 rounded-lg">
         Nice To Meet U
       </h1>
-      <form onSubmit={submitHandler} className="flex flex-col gap-3">
+      <form onSubmit={submitHandler} className="flex flex-col gap-3 ">
         <input
-          className="border p-3 rounded-lg focus:outline-none"
+          className="border p-3 rounded-lg focus:outline-none shadow-lg"
           type="text"
           placeholder="username"
           name="username"
@@ -56,7 +56,7 @@ const Signup = () => {
           required
         />
         <input
-          className="border p-3 rounded-lg focus:outline-none"
+          className="border p-3 rounded-lg focus:outline-none shadow-lg"
           type="email"
           placeholder="email"
           name="email"
@@ -66,7 +66,7 @@ const Signup = () => {
         />
         <label className="relative">
           <input
-            className="border p-3 rounded-lg focus:outline-none w-full"
+            className="border p-3 rounded-lg focus:outline-none w-full shadow-lg"
             type={showpass ? "text" : "password"}
             placeholder="password"
             name="password"

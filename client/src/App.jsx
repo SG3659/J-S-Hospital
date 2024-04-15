@@ -16,12 +16,13 @@ import Bookingpage from "../pages/Bookingpage";
 import Appiontments from "../pages/Appiontments";
 import DoctorAppointments from "../pages/Doctor/DoctorAppointment";
 
+
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
-    <div>
-      {loading && <Spinner />}
-
+    <div className="relative ">
+      <div className="absolute ">{loading && <Spinner />}</div>
+      
       <Routes>
         <Route
           path="/login"
