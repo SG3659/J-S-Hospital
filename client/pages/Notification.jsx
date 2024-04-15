@@ -75,9 +75,9 @@ const Notification = () => {
               Marked all As Seen
             </h1>
           </div>
-          {user?.unseenNotifications.map((notification) => (
+          {user?.unseenNotifications.map((notification, index) => (
             <div
-              key={notification.index}
+              key={index}
               className={"p-2 cursor-pointer"}
               onClick={user?.isAdmin ? () => navigate("/admin/doctors") : ""}
             >
@@ -93,9 +93,9 @@ const Notification = () => {
               Delete all
             </h1>
           </div>
-          {user?.seenNotifications.map((notification) => (
+          {user?.seenNotifications.map((notification, index) => (
             <div
-              key={notification.index}
+              key={index}
               className="p-2  cursor-pointer"
               onClick={
                 user?.isAdmin
