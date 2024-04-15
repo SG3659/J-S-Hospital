@@ -46,26 +46,26 @@ const Appiontments = () => {
   return (
     <Layout>
       <p className="text-3xl font-bold font-serif">Appointments List</p>
-      <table className="min-w-full divide-y divide-gray-200 rounded-xl mt-6 ">
-        <thead className="bg-gray-300">
+      <table className="min-w-full divide-y   mt-6  shadow-lg">
+        <thead className="bg-gray-300 ">
           <tr>
             {columns.map((list) => (
               <th
                 key={list.id}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-xl "
               >
                 {list.title}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white divide-y divide-gray-200 ">
           {appointments.map((appointmentd, appointmentIndex) => (
             <tr key={appointmentIndex}>
               {columns.map((column) => (
                 <td
                   key={`${column.index}-${column.id}`}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 rounded-xl"
                 >
                   {appointmentd[column.id]}
                   {column.id === "action"

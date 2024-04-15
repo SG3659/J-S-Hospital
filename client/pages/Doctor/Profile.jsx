@@ -111,7 +111,7 @@ const Profile = () => {
           <label className="flex flex-col">
             FirstName:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72 "
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="text"
               name="firstName"
               required
@@ -122,7 +122,7 @@ const Profile = () => {
           <label className="flex flex-col">
             LastName:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="text"
               required
               name="lastName"
@@ -133,7 +133,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Phone Number:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="number"
               required
               name="phoneNumber"
@@ -144,7 +144,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Address:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="text"
               required
               name="address"
@@ -156,7 +156,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Specialization:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="text"
               required
               name="specialization"
@@ -167,7 +167,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Profession:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="text"
               required
               name="profession"
@@ -178,7 +178,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Experience:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="number"
               required
               name="experience"
@@ -190,7 +190,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Website:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="text"
               required
               name="website"
@@ -201,7 +201,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Fee Per Visit:
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="number"
               required
               name="feePerConsultation"
@@ -212,7 +212,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Timings(from time):
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="time"
               required
               name="fromTime"
@@ -223,7 +223,7 @@ const Profile = () => {
           <label className="flex flex-col">
             Timings(to time):
             <input
-              className="border p-1 rounded-lg focus:outline-none w-72"
+              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
               type="time"
               required
               name="toTime"

@@ -27,7 +27,7 @@ const UDoctorlist = () => {
   return (
     <Layout>
       <p className="text-3xl font-bold font-serif">Doctors-List</p>
-      <div className="flex flex-wrap gap-7 mt-4">
+      <div className="flex flex-wrap gap-7 mt-4 shadow-lg rounded-lg">
         {doctors &&
           doctors.map((doctor, doctorIndex) => (
             <div

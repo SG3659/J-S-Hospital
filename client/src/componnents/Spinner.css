@@ -1,9 +1,11 @@
+
 .loader {
-   width: 48px;
-   height: 48px;
+   width: 85px;
+   height: 85px;
    border-radius: 50%;
    position: relative;
-   animation: rotate 1s linear infinite
+   animation: rotate 1s linear infinite;
+    
  }
  .loader::before , .loader::after {
    content: "";
@@ -11,7 +13,7 @@
    position: absolute;
    inset: 0px;
    border-radius: 50%;
-   border: 5px solid #FFF;
+   border: 5px solid #FF3D00;
    animation: prixClipFix 2s linear infinite ;
  }
  .loader::after{
