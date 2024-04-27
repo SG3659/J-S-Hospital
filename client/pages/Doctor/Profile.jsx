@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Layout from "../../src/componnents/Layout";
+
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -101,7 +101,7 @@ const Profile = () => {
   };
 
   return (
-    <Layout>
+    <div className="p-4">
       <p className="text-3xl font-bold font-serif">Doctor-Profile</p>
       {doctor && (
         <form
@@ -239,7 +239,7 @@ const Profile = () => {
           </button>
         </form>
       )}
-    </Layout>
+    </div>
   );
 };
 

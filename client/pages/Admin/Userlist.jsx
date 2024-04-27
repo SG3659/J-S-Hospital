@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Layout from "../../src/componnents/Layout";
+
 import axios from "axios";
 import { showLoading, hideLoading } from "../../src/redux/alertSlice";
 import { useDispatch } from "react-redux";
@@ -59,7 +59,7 @@ export const Userlist = () => {
   ];
 
   return (
-    <Layout>
+    <div className="p-4">
       <p className="text-3xl font-bold font-serif">User List </p>
       <table className="min-w-full divide-y divide-gray-200  mt-6 shadow-lg">
         <thead className="bg-gray-300">
@@ -92,6 +92,6 @@ export const Userlist = () => {
           ))}
         </tbody>
       </table>
-    </Layout>
+    </div>
   );
 };
