@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Layout from "../src/componnents/Layout";
+
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
@@ -58,7 +58,7 @@ export const Applydoctor = () => {
     }
   };
   return (
-    <Layout>
+    <div className="p-4">
       <p className="text-3xl font-bold font-serif">Apply Doctors</p>
       <hr className="border-black"></hr>
       <form className="flex flex-wrap gap-16 mt-5 p-7" onSubmit={submitHandler}>
@@ -192,6 +192,6 @@ export const Applydoctor = () => {
           Submit
         </button>
       </form>
-    </Layout>
+    </div>
   );
 };

@@ -1,4 +1,4 @@
-import Layout from "../src/componnents/Layout";
+
 import { Tabs } from "antd";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +65,7 @@ const Notification = () => {
     }
   };
   return (
-    <Layout>
+    <div className="p-4">
       <h1 className="text-3xl font-bold font-serif">Notification</h1>
       <hr className="border-black"></hr>
       <Tabs>
@@ -110,7 +110,7 @@ const Notification = () => {
           ))}
         </Tabs.TabPane>
       </Tabs>
-    </Layout>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Layout from "../src/componnents/Layout";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const UDoctorlist = () => {
     getData();
   }, []);
   return (
-    <Layout>
+    <div className="p-4">
       <p className="text-3xl font-bold font-serif">Doctors-List</p>
       <div className="flex flex-wrap gap-7 mt-4 shadow-lg rounded-lg">
         {doctors &&
@@ -55,7 +55,7 @@ const UDoctorlist = () => {
             </div>
           ))}
       </div>
-    </Layout>
+    </div>
   );
 };
 

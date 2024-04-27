@@ -1,4 +1,3 @@
-import Layout from "../src/componnents/Layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
@@ -44,7 +43,7 @@ const Appiontments = () => {
     getData();
   }, []);
   return (
-    <Layout>
+    <div className="p-4">
       <p className="text-3xl font-bold font-serif">Appointments List</p>
       <table className="min-w-full divide-y   mt-6  shadow-lg">
         <thead className="bg-gray-300 ">
@@ -77,7 +76,7 @@ const Appiontments = () => {
           ))}
         </tbody>
       </table>
-    </Layout>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import Layout from "../src/componnents/Layout";
+
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const Home = () => {
@@ -28,7 +28,7 @@ const Home = () => {
     getData();
   }, []);
   return (
-    <Layout>
+    <div className="p-4">
       <h1>Home page</h1>
       {user?.isAdmin ? (
         ""
@@ -43,7 +43,7 @@ const Home = () => {
           Doctors-List
         </button>
       )}
-    </Layout>
+    </div>
   );
 };
 
