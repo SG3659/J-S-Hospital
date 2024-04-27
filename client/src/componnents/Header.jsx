@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { menu, close } from "../assets";
 import { useState } from "react";
 import { userMenu, adminmenu } from "../constants";
@@ -31,7 +31,7 @@ function Header() {
     ? doctorMenu
     : userMenu;
   return (
-    <div>
+    <div className="p-4">
       <nav className=" p-3 w-full z-20  flex items-center  rounded-2xl  bg-gradient-to-r from-rose-300 to-rose-400 shadow-lg opacity-60">
         <div className="w-full flex justify-between items-center max-w-7xl mx-auto ">
           <Link to="/">
@@ -41,8 +41,15 @@ function Header() {
           </Link>
           <ul className="list-none hidden sm:flex flex-row gap-4  ">
             {menuToBeRendered.map((items) => (
-              <li key={items.id} className="hover:font-medium hover:underline">
-                <Link to={items.path}>{items.title}</Link>
+              <li key={items.id} className="hover:font-medium ">
+                <NavLink
+                  to={items.path}
+                  className={({ isActive }) =>
+                    `${isActive ? "font-medium" : ""}`
+                  }
+                >
+                  {items.title}
+                </NavLink>
               </li>
             ))}
             {/*Logout*/}
@@ -76,7 +83,14 @@ function Header() {
                   key={items.id}
                   className="hover:font-medium hover:underline"
                 >
-                  <Link to={items.path}>{items.title}</Link>
+                  <NavLink
+                    to={items.path}
+                    className={({ isActive }) =>
+                      `${isActive ? "font-medium" : ""}`
+                    }
+                  >
+                    {items.title}
+                  </NavLink>
                 </li>
               ))}
               <li
@@ -84,6 +98,7 @@ function Header() {
                 onClick={() => {
                   localStorage.clear();
                   navigate("/login");
+                  window.location.reload();
                 }}
               >
                 LogOut
@@ -114,9 +129,7 @@ function Header() {
               <span>Welcome Admin!</span> {user?.username}
             </Link>
           ) : (
-            <Link
-              to={user?.isDoctor ? `/doctor/Profile/${user?._id}` : "/profile"}
-            >
+            <Link to={user?.isDoctor ? `/doctor/Profile/${user?._id}` : ""}>
               <span>Welcome!</span> {user?.username}
             </Link>
           )}

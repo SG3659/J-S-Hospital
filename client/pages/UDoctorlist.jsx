@@ -27,12 +27,12 @@ const UDoctorlist = () => {
   return (
     <div className="p-4">
       <p className="text-3xl font-bold font-serif">Doctors-List</p>
-      <div className="flex flex-wrap gap-7 mt-4 shadow-lg rounded-lg">
+      <div className="flex flex-wrap gap-7 mt-4  rounded-lg">
         {doctors &&
           doctors.map((doctor, doctorIndex) => (
             <div
               key={doctorIndex}
-              className="p-3 max-w-lg border rounded-xl cursor-pointer "
+              className="p-3 max-w-lg border rounded-xl cursor-pointer  hover:shadow-2xl"
               onClick={() => navigate(`/doctor/book-appointment/${doctor._id}`)}
             >
               <div className="text-xl font-medium">

@@ -17,121 +17,116 @@ import UDoctorlist from "../pages/UDoctorlist";
 import Bookingpage from "../pages/Bookingpage";
 import Appiontments from "../pages/Appiontments";
 import DoctorAppointments from "../pages/Doctor/DoctorAppointment";
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-  Route,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.js";
 import Layout from "./Layout.jsx";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route
-        path="login"
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="signup"
-        element={
-          <PublicRoute>
-            <Signup />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path=""
-        element={
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: (
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
-        }
-      />
-      <Route
-        path="apply doctor"
-        element={
+        ),
+      },
+      {
+        path: "apply doctor",
+        element: (
           <ProtectedRoute>
             <Applydoctor />
           </ProtectedRoute>
-        }
-      />
-      <Route
-        path="notification"
-        element={
+        ),
+      },
+      {
+        path: "notification",
+        element: (
           <ProtectedRoute>
             <Notification />
           </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="admin/users"
-        element={
+        ),
+      },
+      {
+        path: "admin/users",
+        element: (
           <ProtectedRoute>
             <Userlist />
           </ProtectedRoute>
-        }
-      />
-      <Route
-        path="admin/doctors"
-        element={
+        ),
+      },
+      {
+        path: "admin/doctors",
+        element: (
           <ProtectedRoute>
             <Doctorlist />
           </ProtectedRoute>
-        }
-      />
-      <Route
-        path="doctor/Profile/:id"
-        element={
+        ),
+      },
+      {
+        path: "doctor/Profile/:id",
+        element: (
           <ProtectedRoute>
             <Profile />
           </ProtectedRoute>
-        }
-      />
-      <Route
-        path="doctorlist"
-        element={
+        ),
+      },
+      {
+        path: "doctorlist",
+        element: (
           <ProtectedRoute>
             <UDoctorlist />
           </ProtectedRoute>
-        }
-      />
-      <Route
-        path="doctor/book-appointment/:doctorId"
-        element={
+        ),
+      },
+      {
+        path: "doctor/book-appointment/:doctorId",
+        element: (
           <ProtectedRoute>
             <Bookingpage />
           </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="appointments"
-        element={
+        ),
+      },
+      {
+        path: "appointments",
+        element: (
           <ProtectedRoute>
             <Appiontments />
           </ProtectedRoute>
-        }
-      />
-      <Route
-        path="doctor/appointments"
-        element={
+        ),
+      },
+      {
+        path: "doctor/appointments",
+        element: (
           <ProtectedRoute>
             <DoctorAppointments />
           </ProtectedRoute>
-        }
-      />
-    </Route>
-  )
-);
+        ),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <PublicRoute>
+        <Signup />
+      </PublicRoute>
+    ),
+  },
+]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>

@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 body{
- background-color: #eae9e9;
+ background-color: #3e3d3d;
+ background-image: url('D:\backend\doctorapplication\client\src\assets\bgimage.png');
+ background-size: 96%;
+ 
 }
 .notification-badge-container {
    position: relative;

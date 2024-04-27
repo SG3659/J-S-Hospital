@@ -19,7 +19,7 @@ const Home = () => {
           },
         }
       );
-      //console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -30,14 +30,23 @@ const Home = () => {
   return (
     <div className="p-4">
       <h1>Home page</h1>
+      <div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus id
+          ratione pariatur consectetur culpa, aut molestiae animi doloribus
+          itaque ab? Similique minima sed quos error eius blanditiis quo unde
+          tempora?
+        </p>
+      </div>
+
       {user?.isAdmin ? (
         ""
       ) : user?.isDoctor ? (
         ""
       ) : (
         <button
-          className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
-      disabled:opacity-80  mt-7 "
+          className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-45 w-full text-center
+      disabled:opacity-45  mt-7 "
           onClick={() => navigate("/doctorlist")}
         >
           Doctors-List

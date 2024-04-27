@@ -92,7 +92,7 @@ const Bookingpage = () => {
     getData();
   }, []);
   return (
-    <div className="p-4"> 
+    <div className="p-4">
       <p className="text-3xl font-bold font-serif "> Booking-Page</p>
       <div className="mt-4 ">
         {doctor && (
@@ -101,9 +101,9 @@ const Bookingpage = () => {
               Dr.{doctor.firstName}
               {doctor.lastName}
             </p>
-            <p>({doctor.profession})</p>
-            <p className="mt-1">
-              <b>Timings</b>
+            <p className="text-white">({doctor.profession})</p>
+            <p className="mt-1 text-white ">
+              <b>Timings:</b>
               {doctor.fromTime}-{doctor.toTime}
             </p>
             <div className="mt-4 w-full">
