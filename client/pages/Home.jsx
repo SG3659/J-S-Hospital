@@ -38,20 +38,21 @@ const Home = () => {
           tempora?
         </p>
       </div>
-
-      {user?.isAdmin ? (
-        ""
-      ) : user?.isDoctor ? (
-        ""
-      ) : (
-        <button
-          className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-45 w-full text-center
+      <div className="flex items-center justify-center">
+        {user?.isAdmin ? (
+          ""
+        ) : user?.isDoctor ? (
+          ""
+        ) : (
+          <button
+            className=" border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-45 w-50% text-center
       disabled:opacity-45  mt-7 "
-          onClick={() => navigate("/doctorlist")}
-        >
-          Doctors-List
-        </button>
-      )}
+            onClick={() => navigate("/doctorlist")}
+          >
+            Doctors-List
+          </button>
+        )}
+      </div>
     </div>
   );
 };
