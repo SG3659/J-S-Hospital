@@ -93,7 +93,7 @@ const Bookingpage = () => {
   }, []);
   return (
     <div className="p-4">
-      <p className="text-3xl font-bold font-serif "> Booking-Page</p>
+      <p className="text-3xl font-bold font-serif "> Booking-Page</p>     
       <div className="mt-4 ">
         {doctor && (
           <div className="p-4 max-w-lg mx-auto border-2 rounded-xl flex flex-col items-center">
