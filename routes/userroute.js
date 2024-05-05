@@ -19,6 +19,7 @@ const { authMiddleware } = require("../middlewares/authMiddleware");
 router.post("/register", register);
 //REGISTER || POST
 router.post("/login", login);
+// User Post Data fetch
 router.post("/get-user-info-by-id", authMiddleware, userinfo);
 //Apply  Doctor || POST
 router.post("/applydoctor", authMiddleware, doctors);
