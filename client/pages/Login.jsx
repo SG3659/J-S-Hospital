@@ -93,10 +93,20 @@ const login = () => {
         </button>
       </form>
       <div className="mt-5 flex gap-2">
-        <p>Don't Have an account?</p>
+        <p className="hover:font bold">Don't Have an account?</p>
         <Link to="/signup">
           <span className="text-blue-700">Register</span>
         </Link>
+      </div>
+      <div>
+        {/* <p className=" text-base text-gray-600">
+          <Link
+            to="/forgot-password"
+            className="text-blue-600 font-bold hover:text-blue-700"
+          >
+            Forgot Password ?
+          </Link>
+        </p> */}
       </div>
     </div>
   );

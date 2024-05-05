@@ -29,7 +29,6 @@ const Home = () => {
   }, []);
   return (
     <div className="p-4">
-      <h1>Home page</h1>
       <div>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus id

@@ -22,7 +22,10 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.js";
 import Layout from "./Layout.jsx";
-
+// import ForgotPassword from "../pages/ForgotPassword.jsx";
+// import PasswordResetSuccess from "../pages/PasswordResetSuccess.jsx";
+// import EmailSent from "../pages/EmailSent.jsx";
+// import UpdatePassword from "../pages/UpdatePassword.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -126,6 +129,38 @@ const router = createBrowserRouter([
       </PublicRoute>
     ),
   },
+  // {
+  //   path: "/password-reset-success",
+  //   element: (
+  //     <PublicRoute>
+  //       <PasswordResetSuccess />
+  //     </PublicRoute>
+  //   ),
+  // },
+  // {
+  //   path: "/email-sent",
+  //   element: (
+  //     <PublicRoute>
+  //       <EmailSent />
+  //     </PublicRoute>
+  //   ),
+  // },
+  // {
+  //   path: "/reset-password/:userId/:resetString",
+  //   element: (
+  //     <PublicRoute>
+  //       <UpdatePassword />
+  //     </PublicRoute>
+  //   ),
+  // },
+  // {
+  //   path: "/forgot-password",
+  //   element: (
+  //     <PublicRoute>
+  //       <ForgotPassword />
+  //     </PublicRoute>
+  //   ),
+  // },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
