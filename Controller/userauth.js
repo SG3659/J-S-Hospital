@@ -1,6 +1,7 @@
 const User = require("../Model/userModel");
 const Doctor = require("../Model/doctormodel");
 const Appointment = require("../Model/appointmentModel");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
@@ -89,110 +90,6 @@ exports.login = async (req, res) => {
     });
   }
 };
-// exports.google = async (req, res, next) => {
-//   try {
-//     const user = await User.findOne({ email: req.body.email });
-//     if (user) {
-//       const token = jwt.sign({ id: user_id }, process.env.JWT_TOCKEN);
-//       const { password: pass, ...rest } = user._doc;
-//       res
-//         .cookie("access_token", token, { httpOnly: true })
-//         .status(200)
-//         .send({
-//           success: true,
-//           message: "LoggedIn",
-//           ...rest,
-//         });
-//     } else {
-//       // create password
-//       const generatedPassword =
-//         Math.random().toString(36).slice(-8) +
-//         Math.random().toString(36).slice(-8);
-//       //hashing password
-//       const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
-//       // New user creating
-//       const newUser = await User({
-//         username:
-//           req.body.username.split(" ").join("").toLowerCase() +
-//           Math.random().toString(36).slice(-4),
-//         email: req.body.email,
-//         password: hashedPassword,
-//       });
-//       await newUser.save();
-//       const token = jwt.sign({ id: newUser_id }, process.env.JWT_TOCKEN);
-//       const { password: pass, ...rest } = newUser._doc;
-//       res
-//         .cookie("access_token", token, { httpOnly: true })
-//         .status(200)
-//         .send({
-//           success: true,
-//           message: "LoggedIn",
-//           data: token,
-//           ...rest,
-//         });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({
-//       success: false,
-//       message: `Register Controller ${error.message}`,
-//     });
-//   }
-// };
-//email config
-// const transporter=nodemailer.createTransport({
-//   service:"gmail",
-//   auth:{
-//     user:process.env.EMAIL,
-//     pass:process.env.PASSWORD,
-//   }
-// })
-// // send email Link
-// exports.sendPasswordLink = async (req, res, next) => {
-//   try {
-//     const { email } = req.body;
-//     const userexists = await User.findOne({ email });
-//     if (userexists) {
-//       res.status(401).json({
-//         success: false,
-//         message: "Email does't exists",
-//       });
-//     }
-//     // token generate for reset password
-//     const token =jwt.sign({_id:userexists._id},process.env.JWT_TOCKEN,{expiresIn:"120s"})
-//     const setusertoken =await User.findByIdAndUpdate({_id:userexists._id},{verifytoken:token},{new:true})
-//     if(setusertoken){
-//       const mailOptions={
-//         from:process.env.EMAIL,
-//         to:email,
-//         subject:"Sending Email For password Reset",
-//         text:`This is valid for 2 MINUTES  http://localhost:5000/forgotpassword/${userexists.id}/${setusertoken.verifytoken}`
-//       }
-//       transporter.sendMail(mailOptions,(error, info)=>{
-//         if(error){
-//           console.log(error)
-//           res.status(401).json({
-//             success:false,
-//             message :"email not send",
-//           })
-//         }else{
-//           console.log(info.response)
-//           res.status(201).json({
-//             success:true,
-//             message:"Email send successfully",
-//           })
-//         }
-//       })
-//     }
-//   } catch (error) {
-//     res.status(500).json({
-//       success:false,
-//       message:"Invalid user",
-//     })
-//   }
-// };
-
-// sending all details of user accept pass
 exports.userinfo = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
