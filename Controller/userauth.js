@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
     // user already exists
     const userexisting = await User.findOne({ email });
     if (userexisting) {
-      return res.status(500).json({
+      return res.status(500).send({
         success: false,
         message: "User already exists",
       });
@@ -23,7 +23,7 @@ exports.register = async (req, res) => {
     try {
       hashpass = await bcrypt.hashSync(password, 10);
     } catch (error) {
-      return res.status(500).json({
+      return res.status(500).send({
         success: false,
         message: "error in hashing pass ",
       });
@@ -34,13 +34,13 @@ exports.register = async (req, res) => {
       email,
       password: hashpass,
     });
-    return res.status(200).json({
+    return res.status(200).send({
       success: true,
       message: "User created successfully ",
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "User cannot be registered, please try again later",
     });
@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
     //check user existence
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({
+      return res.status(401).send({
         success: false,
         message: "Invalid email",
       });
@@ -61,13 +61,15 @@ exports.login = async (req, res) => {
     // checking the pass word
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({
+      return res.status(401).send({
         success: false,
         message: "Invalid password",
       });
     } else {
       // token generate
-      const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN);
+      const token = jwt.sign({ id: user._id }, process.env.JWT_TOCKEN, {
+        expiresIn: "1d",
+      });
       //const { password: pass, ...rest } = user;
       const { password: pass, ...rest } = user._doc; // not send the password
 
@@ -75,7 +77,7 @@ exports.login = async (req, res) => {
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
-        .json({
+        .send({
           success: true,
           message: "LoggedIn",
           data: token,
@@ -84,7 +86,7 @@ exports.login = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
@@ -95,12 +97,12 @@ exports.userinfo = async (req, res) => {
     const user = await User.findOne({ _id: req.body.userId });
     user.password = undefined;
     if (!user) {
-      return res.status(401).json({
+      return res.status(401).send({
         success: false,
         message: "user does not exist",
       });
     } else {
-      res.status(200).json({
+      res.status(200).send({
         success: true,
         //data:{name:user.name,email: user.email}
         data: user, // all login user data pass accept password
@@ -108,7 +110,7 @@ exports.userinfo = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
@@ -122,7 +124,7 @@ exports.doctors = async (req, res, next) => {
     const adminUser = await User.findOne({ isAdmin: true });
 
     if (!adminUser) {
-      return res.status(404).json({
+      return res.status(404).send({
         success: false,
         message: "No admin user found",
       });
@@ -143,7 +145,7 @@ exports.doctors = async (req, res, next) => {
     // useennotification update
     await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
 
-    return res.status(200).json({
+    return res.status(200).send({
       success: true,
       message: "Doctor account applied Successfully",
     });
@@ -163,13 +165,13 @@ exports.markseen = async (req, res) => {
     const updatedUser = await user.save();
     updatedUser.password = undefined;
 
-    return res.status(200).json({
+    return res.status(200).send({
       success: true,
       message: "Seen",
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
@@ -183,14 +185,14 @@ exports.markdelete = async (req, res) => {
     user.seenNotifications = [];
     const updatedUser = await user.save();
     updatedUser.password = undefined;
-    return res.status(200).json({
+    return res.status(200).send({
       success: true,
       message: "All Delete",
       data: updatedUser,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
@@ -200,14 +202,14 @@ exports.markdelete = async (req, res) => {
 exports.getAllDocotrsController = async (req, res) => {
   try {
     const doctors = await Doctor.find({ status: "approved" });
-    res.status(200).json({
+    res.status(200).send({
       success: true,
       message: "Doctor List fetched ",
       data: doctors,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
@@ -227,13 +229,13 @@ exports.bookeAppointment = async (req, res) => {
       onClickPath: "/user/appointments",
     });
     await user.save();
-    res.status(200).json({
+    res.status(200).send({
       success: true,
       message: "Appointment book successfully",
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
@@ -258,19 +260,19 @@ exports.checkAvailability = async (req, res) => {
     });
 
     if (appointments.length > 0) {
-      return res.status(200).json({
+      return res.status(200).send({
         message: "Appointments not Available at this time",
         success: true,
       });
     } else {
-      return res.status(200).json({
+      return res.status(200).send({
         message: "Appointments Available ",
         success: true,
       });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
@@ -282,14 +284,14 @@ exports.userAppointments = async (req, res) => {
     const appointment = await Appointment.find({
       userId: req.body.userId,
     });
-    res.status(200).json({
+    res.status(200).send({
       success: true,
       message: "Appointment fetch successfully",
       data: appointment,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong",
     });
