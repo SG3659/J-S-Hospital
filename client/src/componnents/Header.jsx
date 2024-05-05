@@ -36,7 +36,7 @@ function Header() {
         <div className="w-full flex justify-between items-center max-w-7xl mx-auto ">
           <Link to="/">
             <h1 className="font-bold w-15  object-contain text-2xl text-black">
-              JKG-Hospital
+              J&S Hospital
             </h1>
           </Link>
           <ul className="list-none hidden sm:flex flex-row gap-4  ">
