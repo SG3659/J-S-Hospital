@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
- background-color: #3e3d3d;
+ background-color: #e5e5e5;
  background-image: url('');
  background-size: 96%;
  
@@ -23,4 +23,5 @@ body{
    padding: 5px;
    font-size: 6px;
  }
+ 
  
