@@ -39,7 +39,7 @@ function Header() {
               J&S Hospital
             </h1>
           </Link>
-          <ul className="list-none hidden sm:flex flex-row gap-4  ">
+          <ul className="list-none hidden sm:flex flex-row gap-4 text-xl ">
             {menuToBeRendered.map((items) => (
               <li key={items.id} className="hover:font-medium ">
                 <NavLink
@@ -54,7 +54,7 @@ function Header() {
             ))}
             {/*Logout*/}
             <li
-              className="hover:font-medium hover:underline cursor-pointer"
+              className="hover:font-medium  cursor-pointer"
               onClick={() => {
                 localStorage.clear();
                 navigate("/login");
