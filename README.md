@@ -17,7 +17,7 @@ Developed a full-fledged doctor appointment booking system using the MERN stack 
     -> Doctor manage the appointment.
     -> Mansgae and Sechdule the avalability.
     -> Update apoointment status.
-## User Interface 
+### User Interface 
     -> Browse available doctors and their schedules.
     -> Receive notifications regarding their appointment. 
 
