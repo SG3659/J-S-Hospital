@@ -130,32 +130,24 @@ const Home = () => {
           </div>
         </div>
 
-        <div className=" mt-10 p-20 text-center">
+        <div className="  p-2 text-center">
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold ">Biography</h1>
-            <h3 className="mt-2">Who We Are</h3>
+
             <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-              blanditiis sequi aperiam. Debitis fugiat harum ex maxime illo
-              consequatur mollitia voluptatem omnis nihil nesciunt beatae esse
-              ipsam, sapiente totam aspernatur porro ducimus aperiam nisi. Ex
-              magnam voluptatum consectetur reprehenderit fugiat recusandae aut
-              similique illum natus velit, praesentium nostrum nesciunt.
-              Deleniti, nesciunt laboriosam totam iusto!
+              Hi, I'm Sahil Gupta, Currently pursuing Bachelor in Technology
+              From Bhagwan Parshuram Institute of Technology which Affilated
+              from GGSIPU. In Specialisation Electrical & Electronics
+              Engineering.
             </p>
             <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-              We are all in 2024!
+              Motivated and hardworking individual passionate about software
+              development seeks hands-on experience with a team of
+              professionals. Strong understanding of software development
+              concepts and eagerness to learn new technologies.
             </p>
             <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-              We are working on a MERN STACK PROJECT.
-            </p>
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores
-              assumenda exercitationem accusamus sit repellendus quo optio
-              dolorum corporis corrupti. Quas similique vel minima veniam
-              tenetur obcaecati atque magni suscipit laboriosam! Veniam vitae
-              minus nihil cupiditate natus provident. Ex illum quasi pariatur
-              odit nisi voluptas illo qui ipsum mollitia. Libero, assumenda?
+              Email: sahilgupta43384@gmail.com
             </p>
           </div>
         </div>
