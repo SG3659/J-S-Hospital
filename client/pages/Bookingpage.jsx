@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import Layout from "../src/componnents/Layout";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -92,6 +92,8 @@ const Bookingpage = () => {
     getData();
   }, []);
   return (
+    <>
+    <Layout>
     <div className="p-4">
       <p className="text-3xl font-bold font-serif "> Booking-Page</p>
       <div className="mt-4 ">
@@ -150,6 +152,8 @@ const Bookingpage = () => {
         )}
       </div>
     </div>
+    </Layout>
+    </>
   );
 };
 

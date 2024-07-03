@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import Layout from "../../src/componnents/Layout";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -101,145 +101,149 @@ const Profile = () => {
   };
 
   return (
-    <div className="p-4">
-      <p className="text-3xl font-bold font-serif">Doctor-Profile</p>
-      {doctor && (
-        <form
-          className="flex flex-wrap gap-16 mt-5 p-7"
-          onSubmit={updateHandler}
-        >
-          <label className="flex flex-col">
-            FirstName:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="text"
-              name="firstName"
-              required
-              onChange={changeHandler}
-              value={formData.firstName}
-            />
-          </label>
-          <label className="flex flex-col">
-            LastName:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="text"
-              required
-              name="lastName"
-              onChange={changeHandler}
-              value={formData.lastName}
-            />
-          </label>
-          <label className="flex flex-col">
-            Phone Number:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="number"
-              required
-              name="phoneNumber"
-              onChange={changeHandler}
-              value={formData.phoneNumber}
-            />
-          </label>
-          <label className="flex flex-col">
-            Address:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="text"
-              required
-              name="address"
-              onChange={changeHandler}
-              value={formData.address}
-            />
-          </label>
+    <>
+      <Layout>
+        <div className="p-4">
+          <p className="text-3xl font-bold font-serif">Doctor-Profile</p>
+          {doctor && (
+            <form
+              className="flex flex-wrap gap-16 mt-5 p-7"
+              onSubmit={updateHandler}
+            >
+              <label className="flex flex-col">
+                FirstName:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="text"
+                  name="firstName"
+                  required
+                  onChange={changeHandler}
+                  value={formData.firstName}
+                />
+              </label>
+              <label className="flex flex-col">
+                LastName:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="text"
+                  required
+                  name="lastName"
+                  onChange={changeHandler}
+                  value={formData.lastName}
+                />
+              </label>
+              <label className="flex flex-col">
+                Phone Number:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="number"
+                  required
+                  name="phoneNumber"
+                  onChange={changeHandler}
+                  value={formData.phoneNumber}
+                />
+              </label>
+              <label className="flex flex-col">
+                Address:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="text"
+                  required
+                  name="address"
+                  onChange={changeHandler}
+                  value={formData.address}
+                />
+              </label>
 
-          <label className="flex flex-col">
-            Specialization:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="text"
-              required
-              name="specialization"
-              onChange={changeHandler}
-              value={formData.specialization}
-            />
-          </label>
-          <label className="flex flex-col">
-            Profession:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="text"
-              required
-              name="profession"
-              onChange={changeHandler}
-              value={formData.profession}
-            />
-          </label>
-          <label className="flex flex-col">
-            Experience:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="number"
-              required
-              name="experience"
-              onChange={changeHandler}
-              value={formData.experience}
-            />
-          </label>
+              <label className="flex flex-col">
+                Specialization:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="text"
+                  required
+                  name="specialization"
+                  onChange={changeHandler}
+                  value={formData.specialization}
+                />
+              </label>
+              <label className="flex flex-col">
+                Profession:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="text"
+                  required
+                  name="profession"
+                  onChange={changeHandler}
+                  value={formData.profession}
+                />
+              </label>
+              <label className="flex flex-col">
+                Experience:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="number"
+                  required
+                  name="experience"
+                  onChange={changeHandler}
+                  value={formData.experience}
+                />
+              </label>
 
-          <label className="flex flex-col">
-            Website:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="text"
-              required
-              name="website"
-              onChange={changeHandler}
-              value={formData.website}
-            />
-          </label>
-          <label className="flex flex-col">
-            Fee Per Visit:
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="number"
-              required
-              name="feePerConsultation"
-              onChange={changeHandler}
-              value={formData.feePerConsultation}
-            />
-          </label>
-          <label className="flex flex-col">
-            Timings(from time):
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="time"
-              required
-              name="fromTime"
-              onChange={changeHandler}
-              value={formData.fromTime}
-            />
-          </label>
-          <label className="flex flex-col">
-            Timings(to time):
-            <input
-              className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
-              type="time"
-              required
-              name="toTime"
-              onChange={changeHandler}
-              value={formData.toTime}
-            />
-          </label>
-          <button
-            className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
+              <label className="flex flex-col">
+                Website:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="text"
+                  required
+                  name="website"
+                  onChange={changeHandler}
+                  value={formData.website}
+                />
+              </label>
+              <label className="flex flex-col">
+                Fee Per Visit:
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="number"
+                  required
+                  name="feePerConsultation"
+                  onChange={changeHandler}
+                  value={formData.feePerConsultation}
+                />
+              </label>
+              <label className="flex flex-col">
+                Timings(from time):
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="time"
+                  required
+                  name="fromTime"
+                  onChange={changeHandler}
+                  value={formData.fromTime}
+                />
+              </label>
+              <label className="flex flex-col">
+                Timings(to time):
+                <input
+                  className="border p-1 rounded-lg focus:outline-none w-72 shadow-lg"
+                  type="time"
+                  required
+                  name="toTime"
+                  onChange={changeHandler}
+                  value={formData.toTime}
+                />
+              </label>
+              <button
+                className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95 w-full text-center
         disabled:opacity-80  mt-7 "
-          >
-            Update
-          </button>
-        </form>
-      )}
-    </div>
+              >
+                Update
+              </button>
+            </form>
+          )}
+        </div>
+      </Layout>
+    </>
   );
 };
 
