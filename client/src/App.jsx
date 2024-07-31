@@ -1,20 +1,22 @@
+import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import Home from "../pages/Home";
 import ProtectedRoute from "./componnents/ProtectedRoute";
 import PublicRoute from "./componnents/PublicRoute";
 import Spinner from "./componnents/Spinner";
 import { useSelector } from "react-redux";
-import { Applydoctor } from "../pages/Applydoctor";
-import Notification from "../pages/Notification";
-import { Userlist } from "../pages/Admin/Userlist";
-import { Doctorlist } from "../pages/Admin/Doctorlist";
-import Profile from "../pages/Doctor/Profile";
-import UDoctorlist from "../pages/UDoctorlist";
-import Bookingpage from "../pages/Bookingpage";
-import Appiontments from "../pages/Appiontments";
-import DoctorAppointments from "../pages/Doctor/DoctorAppointment";
+const Home = lazy(() => import("../pages/Home"));
+const Signup= lazy(()=>import("../pages/Signup"));
+const Login=  lazy(()=>import("../pages/Login"));
+const Applydoctor = lazy(()=>import( "../pages/Applydoctor"));
+const Notification = lazy (()=>import("../pages/Notification"));
+const   Userlist = lazy(()=>import("../pages/Admin/Userlist"));
+const  Doctorlist =lazy(()=>import("../pages/Admin/Doctorlist"));
+const  Profile = lazy(()=>import("../pages/Doctor/Profile"));
+const UDoctorlist= lazy (()=>import("../pages/UDoctorlist"));
+const  Bookingpage =lazy(()=>import("../pages/Bookingpage")) ;
+const Appiontments =lazy (()=>import("../pages/Appiontments"));
+const DoctorAppointments= lazy(()=>import ("../pages/Doctor/DoctorAppointment"));
+
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
