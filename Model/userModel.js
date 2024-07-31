@@ -13,22 +13,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isDoctor:{
-      type:Boolean,
-      default:false,
-    },
-    isAdmin:{
+    isDoctor: {
       type: Boolean,
-      default:false,
+      default: false,
     },
-    seenNotifications:{
-      type:Array,
-      default:[],
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
-    unseenNotifications:{
-      type:Array,
-      default:[],
-    }
+    seenNotifications: {
+      type: Array,
+      default: [],
+    },
+    unseenNotifications: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );
