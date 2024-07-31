@@ -19,6 +19,7 @@ const DoctorAppointments = lazy(() =>
   import("../pages/Doctor/DoctorAppointment")
 );
 const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
+const EmailSent = lazy(() => import("../pages/EmailSent"));
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -48,6 +49,14 @@ function App() {
             element={
               <PublicRoute>
                 <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/email-sent"
+            element={
+              <PublicRoute>
+                <EmailSent />
               </PublicRoute>
             }
           />

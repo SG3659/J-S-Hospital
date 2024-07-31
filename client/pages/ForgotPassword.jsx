@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -18,7 +19,7 @@ const ForgotPassword = () => {
       const response = await axios.post("/api/user//reset-password", formData);
       if (response.data.success) {
         localStorage.setItem("email", formData.email);
-        toast.success("Email Sent");
+        navigate("/email-sent");
       } else {
         toast.error("Enter valid Email");
       }
