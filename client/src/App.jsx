@@ -18,6 +18,7 @@ const Appiontments = lazy(() => import("../pages/Appiontments"));
 const DoctorAppointments = lazy(() =>
   import("../pages/Doctor/DoctorAppointment")
 );
+const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -39,6 +40,14 @@ function App() {
             element={
               <PublicRoute>
                 <Signup />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgot--password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
               </PublicRoute>
             }
           />

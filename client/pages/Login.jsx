@@ -99,14 +99,14 @@ const login = () => {
         </Link>
       </div>
       <div>
-        {/* <p className=" text-base text-gray-600">
+        <p className=" text-base text-gray-600">
           <Link
-            to="/forgot-password"
+            to="/forgot--password"
             className="text-blue-600 font-bold hover:text-blue-700"
           >
             Forgot Password ?
           </Link>
-        </p> */}
+        </p>
       </div>
     </div>
   );
