@@ -11,6 +11,7 @@ const {
   bookeAppointment,
   checkAvailability,
   userAppointments,
+  resetPassword,
 } = require("../Controller/userauth");
 
 const { authMiddleware } = require("../middlewares/authMiddleware");
@@ -18,6 +19,8 @@ const { authMiddleware } = require("../middlewares/authMiddleware");
 router.post("/register", register);
 //REGISTER || POST
 router.post("/login", login);
+// ResetPassword
+router.post("/reset-password",resetPassword)
 // User Post Data fetch
 router.post("/get-user-info-by-id", authMiddleware, userinfo);
 //Apply  Doctor || POST

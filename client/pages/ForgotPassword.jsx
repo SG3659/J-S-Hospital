@@ -1,4 +1,7 @@
 import { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -11,6 +14,17 @@ const ForgotPassword = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post("/api/user//reset-password", formData);
+      if (response.data.success) {
+        localStorage.setItem("email", formData.email);
+        toast.success("Email Sent");
+      } else {
+        toast.error("Enter valid Email");
+      }
+    } catch (error) {
+      console.error("Something went wrong");
+    }
   };
   return (
     <div className="from-gray-50 to-gray-500 bg-gradient-to-r h-screen flex items-center justify-center p-12 py-6">
