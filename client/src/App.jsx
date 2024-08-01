@@ -7,14 +7,14 @@ import { useSelector } from "react-redux";
 const Home = lazy(() => import("../pages/Home"));
 const Signup = lazy(() => import("../pages/Signup"));
 const Login = lazy(() => import("../pages/Login"));
-const Applydoctor = lazy(() => import("../pages/Applydoctor"));
+const ApplyDoctor = lazy(() => import("../pages/Applydoctor"));
 const Notification = lazy(() => import("../pages/Notification"));
-const Userlist = lazy(() => import("../pages/Admin/Userlist"));
-const Doctorlist = lazy(() => import("../pages/Admin/Doctorlist"));
+const UserList = lazy(() => import("../pages/Admin/Userlist"));
+const DoctorList = lazy(() => import("../pages/Admin/Doctorlist"));
 const Profile = lazy(() => import("../pages/Doctor/Profile"));
-const UDoctorlist = lazy(() => import("../pages/UDoctorlist"));
-const Bookingpage = lazy(() => import("../pages/Bookingpage"));
-const Appiontments = lazy(() => import("../pages/Appiontments"));
+const UDoctorList = lazy(() => import("../pages/UDoctorlist"));
+const BookingPage = lazy(() => import("../pages/Bookingpage"));
+const Appointments = lazy(() => import("../pages/Appiontments"));
 const UpdatePassword = lazy(() => import("../pages/UpdatePassword"));
 const PasswordResetSuccess = lazy(() =>
   import("../pages/PasswordResetSuccess")
@@ -93,7 +93,7 @@ function App() {
             path="/apply doctor"
             element={
               <ProtectedRoute>
-                <Applydoctor />
+                <ApplyDoctor />
               </ProtectedRoute>
             }
           />
@@ -110,7 +110,7 @@ function App() {
             path="/admin/users"
             element={
               <ProtectedRoute>
-                <Userlist />
+                <UserList />
               </ProtectedRoute>
             }
           />
@@ -118,7 +118,7 @@ function App() {
             path="/admin/doctors"
             element={
               <ProtectedRoute>
-                <Doctorlist />
+                <DoctorList />
               </ProtectedRoute>
             }
           />
@@ -134,7 +134,7 @@ function App() {
             path="/doctorlist"
             element={
               <ProtectedRoute>
-                <UDoctorlist />
+                <UDoctorList />
               </ProtectedRoute>
             }
           />
@@ -142,7 +142,7 @@ function App() {
             path="/doctor/book-appointment/:doctorId"
             element={
               <ProtectedRoute>
-                <Bookingpage />
+                <BookingPage />
               </ProtectedRoute>
             }
           />
@@ -151,7 +151,7 @@ function App() {
             path="/appointments"
             element={
               <ProtectedRoute>
-                <Appiontments />
+                <Appointments />
               </ProtectedRoute>
             }
           />

@@ -132,7 +132,7 @@ const Home = () => {
 
         <div className="  p-2 text-center">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold ">Biography</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold ">About Creater</h1>
 
             <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               Hi, I'm Sahil Gupta, Currently pursuing Bachelor in Technology

@@ -30,11 +30,13 @@ const UDoctorlist = () => {
       <Layout>
         <div className="p-4">
           <p className="text-3xl font-bold font-serif">Doctors-List</p>
-          <div className="flex items-center  mt-10   p-2  border  border-gray-400 rounded-xl w-50%">
+          <div className="flex items-center  mt-10  gap-3 p-2  border  border-gray-400 rounded-xl w-50%">
+            <div>
+              <p className="font-bold">Search Doctor </p>
+            </div>
             <input
               type="text"
-              className=" p-4 border-b-2 border-black bg-transparent outline-none h-7 text-black w-40 capitalize text-base font-medium placeholder-white transition-all duration-500 focus:w-64"
-              placeholder="Search Doctor..."
+              className=" p-4 border-2 rounded-xl border-black bg-transparent outline-none h-7 text-black w-40 capitalize text-base font-medium placeholder-white transition-all duration-500 focus:w-64"
               onChange={(e) => setQuery(e.target.value)}
               value={query}
             />

@@ -15,8 +15,8 @@ const DoctorAppiontments = () => {
       id: "date",
       render: (text, record) => (
         <span>
-          {moment(record.date).format("HH:mm")} &nbsp
-          {moment(record.time).format("HH:mm")}
+          {moment(record.date).format("MMMM Do YYYY")} &nbsp
+          {moment(record.time).format("HH:mm a")}
         </span>
       ),
     },

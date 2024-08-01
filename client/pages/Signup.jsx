@@ -20,15 +20,11 @@ const Signup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "/api/user/register",
-        JSON.stringify(formData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post("/api/user/register", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/login");
