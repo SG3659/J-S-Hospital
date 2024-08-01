@@ -27,5 +27,10 @@ Developed a full-fledged doctor appointment booking system using the MERN stack 
     -> Database: MongoDB.
     -> Authentication: JWT (JSON Web Tokens).
     -> Other Tools: VS code Editor, Git for version control.
+## Description:
+    -> Authentication System Development: Created a robust authentication system using JWT tokens, integrating Regex for password Strong. 
+    -> Additionally, Implemented features to efficiently Forgot-Password user credentials efficiently.
+    -> Implement a Middleware to limit block brute force attacks using express-rate-limit, Additionally incoporated password hassing for secure.
+    -> Used Redux Toolkit for efficient global state management, improving overall Web performance. 
 
     
