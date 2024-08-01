@@ -16,7 +16,7 @@ const ForgotPassword = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/user//reset-password", formData);
+      const response = await axios.post("/api/user/reset-password", formData);
       if (response.data.success) {
         localStorage.setItem("email", formData.email);
         navigate("/email-sent");

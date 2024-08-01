@@ -15,6 +15,10 @@ const Profile = lazy(() => import("../pages/Doctor/Profile"));
 const UDoctorlist = lazy(() => import("../pages/UDoctorlist"));
 const Bookingpage = lazy(() => import("../pages/Bookingpage"));
 const Appiontments = lazy(() => import("../pages/Appiontments"));
+const UpdatePassword = lazy(() => import("../pages/UpdatePassword"));
+const PasswordResetSuccess = lazy(() =>
+  import("../pages/PasswordResetSuccess")
+);
 const DoctorAppointments = lazy(() =>
   import("../pages/Doctor/DoctorAppointment")
 );
@@ -60,6 +64,23 @@ function App() {
               </PublicRoute>
             }
           />
+          <Route
+            path="/reset-password/:userId/:resetString"
+            element={
+              <PublicRoute>
+                <UpdatePassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/password-reset-success"
+            element={
+              <PublicRoute>
+                <PasswordResetSuccess />
+              </PublicRoute>
+            }
+          />
+
           <Route
             path="/"
             element={

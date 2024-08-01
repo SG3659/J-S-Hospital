@@ -403,4 +403,55 @@ transporter.verify((error, success) => {
   }
 });
 
+exports.updatePassword=async(req,res)=>{
+  const { userId, resetString } = req.params;
+  const { newPassword } = req.body;
 
+  try {
+    const resetRecord = await PasswordReset.find({ userId });
+
+    if (resetRecord.length === 0) {
+      return res.json({
+        success: false,
+        message: "Password link either doesn't exist or has expired.",
+      });
+    }
+
+    const { expiresAt, resetString: hashedResetString } = resetRecord[0];
+
+    if (expiresAt < Date.now()) {
+      await PasswordReset.deleteOne({ userId });
+      return res.json({
+        success: false,
+        message: "Password reset link has expired",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(resetString, hashedResetString);
+
+    if (!isMatch) {
+      return res.json({
+        success: false,
+        message: "Invalid password reset details passed.",
+      });
+    }
+
+    const saltRounds = 10;
+    const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    await User.updateOne({ _id: userId }, { password: hashedNewPassword });
+
+    await PasswordReset.deleteOne({ userId });
+
+    return res.json({
+      success: true,
+      message: "Password has been reset successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "An error occurred during the password reset process.",
+    });
+  }
+}
