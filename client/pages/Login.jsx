@@ -26,15 +26,11 @@ const login = () => {
     //backend connectivity
     try {
       dispatch(showLoading());
-      const response = await axios.post(
-        "/api/user/login",
-        JSON.stringify(formData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post("/api/user/login", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       dispatch(hideLoading());
       if (response.data.success) {
         //local storage created
@@ -99,14 +95,14 @@ const login = () => {
         </Link>
       </div>
       <div>
-        {/* <p className=" text-base text-gray-600">
+        <p className=" text-base text-gray-600">
           <Link
-            to="/forgot-password"
+            to="/forgot--password"
             className="text-blue-600 font-bold hover:text-blue-700"
           >
             Forgot Password ?
           </Link>
-        </p> */}
+        </p>
       </div>
     </div>
   );

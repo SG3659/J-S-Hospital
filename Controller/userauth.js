@@ -1,10 +1,14 @@
 const User = require("../Model/userModel");
 const Doctor = require("../Model/doctormodel");
 const Appointment = require("../Model/appointmentModel");
-
+const PasswordReset = require("../Model/passwordResetModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
+const { v4: uuidv4 } = require("uuid");
+require("dotenv").config();
+const nodemailer = require("nodemailer");
+// nodemailer transporter
 
 exports.register = async (req, res) => {
   try {
@@ -297,3 +301,157 @@ exports.userAppointments = async (req, res) => {
     });
   }
 };
+exports.resetPassword = async (req, res) => {
+  const { email } = req.body;
+  const name = User.username;
+  const redirectUrl = "http://localhost:5173/reset-password";
+  // check if email exists
+  try {
+    const data = await User.find({ email });
+
+    if (data.length) {
+      // User exists
+      await sendResetEmail(data[0], redirectUrl, res);
+    } else {
+      res.json({
+        success: false,
+        message: "Email does not exist",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+const sendResetEmail = async ({ _id, email, username }, redirectUrl, res) => {
+  const resetString = uuidv4() + _id;
+
+  try {
+    // Clear existing reset records
+    await PasswordReset.deleteMany({ userId: _id });
+
+    // Hash the reset string
+    const hashedResetString = await bcrypt.hash(resetString, 10);
+
+    // Create new reset record
+    const newPasswordReset = new PasswordReset({
+      userId: _id,
+      resetString: hashedResetString,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 3600000, // 1 hour
+    });
+
+    await newPasswordReset.save();
+
+    // Mail options
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Password Reset",
+      html: `
+        Hello ${username},
+        <br/>
+        <br/>
+        Please click on the link below to reset your password.
+        <br/>
+        <br/>
+        <a href="${redirectUrl}/${_id}/${resetString}">Reset Password</a>
+        The link will expire in 1 hour.
+        <br/>
+        <br/>
+        If you did not request this, please ignore this email.
+        <br/>
+        <br/>
+        Thank you.
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({
+      success: true,
+      message:
+        "Password reset email sent successfully, please check your email",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "An error occurred during the password reset process.",
+    });
+  }
+};
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  // host: 'smtp.ethereal.email',
+  // port: 587,
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Ready for messages");
+    console.log(success);
+  }
+});
+
+exports.updatePassword=async(req,res)=>{
+  const { userId, resetString } = req.params;
+  const { newPassword } = req.body;
+
+  try {
+    const resetRecord = await PasswordReset.find({ userId });
+
+    if (resetRecord.length === 0) {
+      return res.json({
+        success: false,
+        message: "Password link either doesn't exist or has expired.",
+      });
+    }
+
+    const { expiresAt, resetString: hashedResetString } = resetRecord[0];
+
+    if (expiresAt < Date.now()) {
+      await PasswordReset.deleteOne({ userId });
+      return res.json({
+        success: false,
+        message: "Password reset link has expired",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(resetString, hashedResetString);
+
+    if (!isMatch) {
+      return res.json({
+        success: false,
+        message: "Invalid password reset details passed.",
+      });
+    }
+
+    const saltRounds = 10;
+    const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    await User.updateOne({ _id: userId }, { password: hashedNewPassword });
+
+    await PasswordReset.deleteOne({ userId });
+
+    return res.json({
+      success: true,
+      message: "Password has been reset successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "An error occurred during the password reset process.",
+    });
+  }
+}

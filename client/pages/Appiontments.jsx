@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import Layout from "../src/componnents/Layout";
- const Appiontments = () => {
+const Appiontments = () => {
   const [appointments, setAppointments] = useState([]);
   const columns = [
     {
@@ -14,8 +14,8 @@ import Layout from "../src/componnents/Layout";
       id: "date",
       render: (text, record) => (
         <span>
-          {moment(record.date).format("HH:mm")} &nbsp
-          {moment(record.time).format("HH:mm")}
+          {moment(record.date).format("MMMM Do YYYY")} &nbsp
+          {moment(record.time).format("h:mm:ss a")}
         </span>
       ),
     },
@@ -34,7 +34,7 @@ import Layout from "../src/componnents/Layout";
 
       if (response.data.success) {
         setAppointments(response.data.data);
-        // console.log(response.data);
+        console.log(response.data);
       }
     } catch (error) {
       console.log(error);

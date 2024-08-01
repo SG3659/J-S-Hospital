@@ -7,17 +7,23 @@ import { useSelector } from "react-redux";
 const Home = lazy(() => import("../pages/Home"));
 const Signup = lazy(() => import("../pages/Signup"));
 const Login = lazy(() => import("../pages/Login"));
-const Applydoctor = lazy(() => import("../pages/Applydoctor"));
+const ApplyDoctor = lazy(() => import("../pages/Applydoctor"));
 const Notification = lazy(() => import("../pages/Notification"));
-const Userlist = lazy(() => import("../pages/Admin/Userlist"));
-const Doctorlist = lazy(() => import("../pages/Admin/Doctorlist"));
+const UserList = lazy(() => import("../pages/Admin/Userlist"));
+const DoctorList = lazy(() => import("../pages/Admin/Doctorlist"));
 const Profile = lazy(() => import("../pages/Doctor/Profile"));
-const UDoctorlist = lazy(() => import("../pages/UDoctorlist"));
-const Bookingpage = lazy(() => import("../pages/Bookingpage"));
-const Appiontments = lazy(() => import("../pages/Appiontments"));
+const UDoctorList = lazy(() => import("../pages/UDoctorlist"));
+const BookingPage = lazy(() => import("../pages/Bookingpage"));
+const Appointments = lazy(() => import("../pages/Appiontments"));
+const UpdatePassword = lazy(() => import("../pages/UpdatePassword"));
+const PasswordResetSuccess = lazy(() =>
+  import("../pages/PasswordResetSuccess")
+);
 const DoctorAppointments = lazy(() =>
   import("../pages/Doctor/DoctorAppointment")
 );
+const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
+const EmailSent = lazy(() => import("../pages/EmailSent"));
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -43,6 +49,39 @@ function App() {
             }
           />
           <Route
+            path="/forgot--password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/email-sent"
+            element={
+              <PublicRoute>
+                <EmailSent />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/reset-password/:userId/:resetString"
+            element={
+              <PublicRoute>
+                <UpdatePassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/password-reset-success"
+            element={
+              <PublicRoute>
+                <PasswordResetSuccess />
+              </PublicRoute>
+            }
+          />
+
+          <Route
             path="/"
             element={
               <ProtectedRoute>
@@ -54,7 +93,7 @@ function App() {
             path="/apply doctor"
             element={
               <ProtectedRoute>
-                <Applydoctor />
+                <ApplyDoctor />
               </ProtectedRoute>
             }
           />
@@ -71,7 +110,7 @@ function App() {
             path="/admin/users"
             element={
               <ProtectedRoute>
-                <Userlist />
+                <UserList />
               </ProtectedRoute>
             }
           />
@@ -79,7 +118,7 @@ function App() {
             path="/admin/doctors"
             element={
               <ProtectedRoute>
-                <Doctorlist />
+                <DoctorList />
               </ProtectedRoute>
             }
           />
@@ -95,7 +134,7 @@ function App() {
             path="/doctorlist"
             element={
               <ProtectedRoute>
-                <UDoctorlist />
+                <UDoctorList />
               </ProtectedRoute>
             }
           />
@@ -103,7 +142,7 @@ function App() {
             path="/doctor/book-appointment/:doctorId"
             element={
               <ProtectedRoute>
-                <Bookingpage />
+                <BookingPage />
               </ProtectedRoute>
             }
           />
@@ -112,7 +151,7 @@ function App() {
             path="/appointments"
             element={
               <ProtectedRoute>
-                <Appiontments />
+                <Appointments />
               </ProtectedRoute>
             }
           />
