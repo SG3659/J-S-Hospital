@@ -81,6 +81,10 @@ const Signup = () => {
             )}
           </span>
         </label>
+        <p className="text-white text-center text-black">
+          {" "}
+          min 8 cha. & contain special Character
+        </p>
         <button
           className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95
         disabled:opacity-80"
