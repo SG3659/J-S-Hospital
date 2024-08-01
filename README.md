@@ -1,5 +1,11 @@
 # Doctor-Appointment 
 Developed a full-fledged doctor appointment booking system using the MERN stack (MongoDB, Express.js, React, Node.js). The application provides a seamless experience for users to book appointments with their doctors, featuring distinct interfaces for Admin, Doctor, and User roles.
+## Description:
+    -> Authentication System Development: Created a robust authentication system using JWT tokens, integrating Regex for password Strong. 
+    -> Additionally, Implemented features to efficiently Forgot-Password user credentials efficiently.
+    -> Implement a Middleware to limit block brute force attacks using express-rate-limit, Additionally incoporated password hassing for secure.
+    -> Used Redux Toolkit for efficient global state management, improving overall Web performance. 
+
 ## 1. User Interface:
     ->  Designed and implemented an intuitive and responsive user interface using React.
     ->  Users can easily navigate to book appointments, view doctor availability, and manage their bookings.
@@ -27,10 +33,5 @@ Developed a full-fledged doctor appointment booking system using the MERN stack 
     -> Database: MongoDB.
     -> Authentication: JWT (JSON Web Tokens).
     -> Other Tools: VS code Editor, Git for version control.
-## Description:
-    -> Authentication System Development: Created a robust authentication system using JWT tokens, integrating Regex for password Strong. 
-    -> Additionally, Implemented features to efficiently Forgot-Password user credentials efficiently.
-    -> Implement a Middleware to limit block brute force attacks using express-rate-limit, Additionally incoporated password hassing for secure.
-    -> Used Redux Toolkit for efficient global state management, improving overall Web performance. 
 
     
