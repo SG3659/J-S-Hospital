@@ -3,9 +3,12 @@ import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Layout from "../src/componnents/Layout";
+import { setUser } from "../src/redux/userSlice";
+import { showLoading, hideLoading } from "../src/redux/alertSlice";
+import { useSelector, useDispatch } from "react-redux";
 const Home = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user); // show email on ui (get login person all details)
 
   const navigate = useNavigate();
@@ -82,24 +85,34 @@ const Home = () => {
 
   const getData = async () => {
     try {
-      //  give a response
+      dispatch(showLoading());
       const response = await axios.post(
         "/api/user/get-user-info-by-id",
-        {},
+        { token: localStorage.getItem("token") },
         {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      // console.log(response.data);
+      dispatch(hideLoading());
+      if (response.data.success) {
+        dispatch(setUser(response.data.data)); // passing the user data redux
+      } else {
+        localStorage.clear();
+        navigate("/login");
+      }
     } catch (error) {
-      console.log(error);
+      dispatch(hideLoading());
+      localStorage.clear(); // this when wrong token pass
+      navigate("/login");
     }
   };
   useEffect(() => {
-    getData();
-  }, []);
+    if (!user) {
+      getData();
+    }
+  }, [user]);
   return (
     <>
       <Layout>
@@ -130,28 +143,6 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="  p-2 text-center">
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-bold ">About Creater</h1>
-
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-              Hi, I'm Sahil Gupta, Currently pursuing Bachelor in Technology
-              From Bhagwan Parshuram Institute of Technology which Affilated
-              from GGSIPU. In Specialisation Electrical & Electronics
-              Engineering.
-            </p>
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-              Motivated and hardworking individual passionate about software
-              development seeks hands-on experience with a team of
-              professionals. Strong understanding of software development
-              concepts and eagerness to learn new technologies.
-            </p>
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-              Email: sahilgupta43384@gmail.com
-            </p>
-          </div>
-        </div>
-
         <div className="p-4 ">
           <div className="flex items-center justify-center">
             {user?.isAdmin ? (
@@ -173,18 +164,40 @@ const Home = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight text-center mb-4">
             Department
           </h1>
+          <div className="flex items-center justify-center">
+            <Carousel
+              responsive={responsive}
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+            >
+              {departmentsArray.map((depart, index) => (
+                <div key={index}>
+                  <img src={depart.imageUrl} className="rounded-xl" />
+                  <div className="font-semibold">{depart.name}</div>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </div>
+        <div className="  p-2 text-center mt-6">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold ">About Creater</h1>
 
-          <Carousel
-            responsive={responsive}
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-          >
-            {departmentsArray.map((depart, index) => (
-              <div key={index}>
-                <img src={depart.imageUrl} className="rounded-xl" />
-                <div className="font-semibold">{depart.name}</div>
-              </div>
-            ))}
-          </Carousel>
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+              Hi, I'm Sahil Gupta, Currently pursuing Bachelor in Technology
+              From Bhagwan Parshuram Institute of Technology which Affilated
+              from GGSIPU. In Specialisation Electrical & Electronics
+              Engineering.
+            </p>
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+              Motivated and hardworking individual passionate about software
+              development seeks hands-on experience with a team of
+              professionals. Strong understanding of software development
+              concepts and eagerness to learn new technologies.
+            </p>
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+              Email: sahilgupta43384@gmail.com
+            </p>
+          </div>
         </div>
       </Layout>
     </>
