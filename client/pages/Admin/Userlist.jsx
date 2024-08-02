@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import Layout from "../../src/componnents/Layout";
 import axios from "axios";
 import { showLoading, hideLoading } from "../../src/redux/alertSlice";
 import { useDispatch } from "react-redux";
@@ -59,39 +59,43 @@ export const Userlist = () => {
   ];
 
   return (
-    <div className="p-4">
-      <p className="text-3xl font-bold font-serif">User List </p>
-      <table className="min-w-full divide-y divide-gray-200  mt-6 shadow-lg">
-        <thead className="bg-gray-300">
-          <tr>
-            {usercolumns.map((user) => (
-              <th
-                key={user.id}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-xl"
-              >
-                {user.title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {users.map((userd, userIndex) => (
-            <tr key={userIndex}>
-              {usercolumns.map((column) => (
-                <td
-                  key={`${userd.index}-${column.id}`}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 rounded-xl"
-                >
-                  {userd[column.id]}
-                  {column.id === "action" || column.id === "isDoctor"
-                    ? column.render("", userd)
-                    : ""}
-                </td>
+    <>
+      <Layout>
+        <div className="p-4">
+          <p className="text-3xl font-bold font-serif">User List </p>
+          <table className="min-w-full divide-y divide-gray-200  mt-6 shadow-lg">
+            <thead className="bg-gray-300">
+              <tr>
+                {usercolumns.map((user) => (
+                  <th
+                    key={user.id}
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-xl"
+                  >
+                    {user.title}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {users.map((userd, userIndex) => (
+                <tr key={userIndex}>
+                  {usercolumns.map((column) => (
+                    <td
+                      key={`${userd.index}-${column.id}`}
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 rounded-xl"
+                    >
+                      {userd[column.id]}
+                      {column.id === "action" || column.id === "isDoctor"
+                        ? column.render("", userd)
+                        : ""}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+            </tbody>
+          </table>
+        </div>
+      </Layout>
+    </>
   );
 };

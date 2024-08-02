@@ -4,7 +4,7 @@ exports.getusers = async (req, res) => {
   try {
     const users = await User.find({});
     users.password = undefined;
-    res.status(200).send({
+    res.send({
       success: true,
       message: "User fetched successfully",
       data: users,
@@ -21,14 +21,14 @@ exports.getdoctors = async (req, res) => {
   try {
     const doctors = await Doctor.find({});
     doctors.password = undefined;
-    res.status(200).send({
+    res.send({
       success: true,
       message: "Doctor fetched successfully",
       data: doctors,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
+    return res.send({
       success: false,
       message: "Something went wrong",
     });
@@ -47,14 +47,14 @@ exports.accountstatus = async (req, res) => {
     });
     user.isDoctor = status === "aprroved" ? true : false;
     await user.save();
-    res.status(201).send({
+    res.send({
       success: true,
       message: "Status Updated",
       data: doctor,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
+    return res.send({
       success: false,
       message: "Something went wrong",
     });

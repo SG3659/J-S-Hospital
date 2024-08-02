@@ -4,14 +4,14 @@ const User = require("../Model/userModel");
 exports.getdoctorinfo = async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ userId: req.body.userId });
-    res.status(200).send({
+    res.send({
       success: true,
       message: "Doctor data  fetched successfully",
       data: doctor,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
+    return res.send({
       success: false,
       message: "Something went wrong",
     });
@@ -23,14 +23,14 @@ exports.updateprofile = async (req, res) => {
       { userId: req.body.userId },
       req.body
     );
-    res.status(200).send({
+    res.send({
       success: true,
       message: "Doctor profile update  successfully",
       data: doctor,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
+    return res.send({
       success: false,
       message: "Something went wrong",
     });
@@ -40,14 +40,14 @@ exports.updateprofile = async (req, res) => {
 exports.getdoctorid = async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ _id: req.body.doctorId });
-    res.status(200).send({
+    res.send({
       success: true,
       message: "single doc   successfully",
       data: doctor,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
+    return res.send({
       success: false,
       message: "Something went wrong",
     });
