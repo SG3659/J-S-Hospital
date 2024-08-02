@@ -7,81 +7,12 @@ import Layout from "../src/componnents/Layout";
 import { setUser } from "../src/redux/userSlice";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { departmentsArray, responsive } from "../src/constants/index";
 const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user); // show email on ui (get login person all details)
 
   const navigate = useNavigate();
-
-  const departmentsArray = [
-    {
-      name: "Pediatrics",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOpEq3XHZ1qyO9vV1N5edJvQygp3miiMtDkQ&s",
-    },
-    {
-      name: "Orthopedics",
-      imageUrl:
-        "data:image/jpeg;base64,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",
-    },
-    {
-      name: "Cardiology",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjMHFyDqnrqQy5eATsFON6Rp9N2o8l5cYzCA&s",
-    },
-    {
-      name: "Neurology",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvoS4bDT7Oj9AQPE0nkzgKbf10O84CJvU3rw&s",
-    },
-    {
-      name: "Oncology",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-0YpMTM3V82S3ZfkcD7lSoaK7dKvwYKgYng&s",
-    },
-    {
-      name: "Radiology",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXTssxt_ayBtb2ZFMI31LjnkflvaPBsBcu5A&s",
-    },
-    {
-      name: "Physical Therapy",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDMKpYvMzCzYOJ6aNMWuq-6nOX7sq-TddC2Q&s",
-    },
-    {
-      name: "Dermatology",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ70YlBmMxQ2jJOWAuKbdUBzBJgoxzh68oZw&s",
-    },
-    {
-      name: "ENT",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ6c-aKanw99JI94JFiu3JFxCsm2ycZ_Sojw&s",
-    },
-  ];
-  const responsive = {
-    extraLarge: {
-      breakpoint: { max: 3000, min: 1324 },
-      items: 3,
-      slidesToSlide: 1, // optional, default to 1.
-    },
-    large: {
-      breakpoint: { max: 1324, min: 1005 },
-      items: 3,
-      slidesToSlide: 1, // optional, default to 1.
-    },
-    medium: {
-      breakpoint: { max: 1005, min: 700 },
-      items: 2,
-      slidesToSlide: 1, // optional, default to 1.
-    },
-    small: {
-      breakpoint: { max: 700, min: 0 },
-      items: 1,
-      slidesToSlide: 1, // optional, default to 1.
-    },
-  };
 
   const getData = async () => {
     try {
@@ -116,16 +47,16 @@ const Home = () => {
   return (
     <>
       <Layout>
-          <Carousel
-            responsive={responsive}
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-          >
-            {departmentsArray.map((depart, index) => (
-              <div key={index}>
-                <img src={depart.imageUrl} className="w-full h-64" />
-              </div>
-            ))}
-          </Carousel>
+        <Carousel
+          responsive={responsive}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+        >
+          {departmentsArray.map((depart, index) => (
+            <div key={index}>
+              <img src={depart.imageUrl} className="w-full h-64" />
+            </div>
+          ))}
+        </Carousel>
         <div className=" p-20 mt-10 flex items-center ">
           <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight text-center mb-4">
