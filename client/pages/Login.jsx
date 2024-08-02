@@ -5,6 +5,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
+import { signInSuccess, signInFailure } from "../src/redux/logInSlice";
+
 const login = () => {
   //const { loading } = useSelector((state) => state.alerts);
   //console.log(loading) redux checking
@@ -36,8 +38,10 @@ const login = () => {
         //local storage created
         toast.success(response.data.message);
         localStorage.setItem("token", response.data.data);
+        dispatch(signInSuccess(response.data.message));
         navigate("/");
       } else {
+        dispatch(signInFailure(response.data.message));
         toast.error(response.data.message);
       }
     } catch (error) {
