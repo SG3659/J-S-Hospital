@@ -10,6 +10,10 @@ const Appiontments = () => {
       id: "_id",
     },
     {
+      title: "Name",
+      id: "",
+    },
+    {
       title: "Date & Time ",
       id: "date",
       render: (text, record) => (

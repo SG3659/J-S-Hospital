@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
     try {
       hashpass = await bcrypt.hashSync(password, 10);
     } catch (error) {
-      return res.status(500).send({
+      return res.send({
         success: false,
         message: "error in hashing pass ",
       });
@@ -44,7 +44,7 @@ exports.register = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
+    return res.send({
       success: false,
       message: "User cannot be registered, please try again later",
     });
@@ -78,15 +78,28 @@ exports.login = async (req, res) => {
       const { password: pass, ...rest } = user._doc; // not send the password
 
       // store token in cookies
-      res
-        .cookie("access_token", token, { httpOnly: true })
-        .send({
-          success: true,
-          message: "LoggedIn",
-          data: token,
-          ...rest,
-        });
+      res.cookie("access_token", token, { httpOnly: true }).send({
+        success: true,
+        message: "LoggedIn",
+        data: token,
+        ...rest,
+      });
     }
+  } catch (error) {
+    console.error(error);
+    return res.send({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie("access_token");
+    return res.send({
+      success: true,
+      message: "User has been LogOut",
+    });
   } catch (error) {
     console.error(error);
     return res.send({

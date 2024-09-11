@@ -1,10 +1,10 @@
 // implement in all pages
 import { Link, useNavigate } from "react-router-dom";
-import { menu, close } from "../assets";
+import { menu, close } from "../assests";
 import { useState } from "react";
 import { userMenu, adminmenu } from "../constants";
 import { FaBell } from "react-icons/fa";
-
+import axios from "axios";
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
@@ -33,6 +33,16 @@ const Layout = ({ children }) => {
     ? doctorMenu
     : userMenu;
 
+  const logoutHandler = async () => {
+    try {
+      const response = await axios.get("/api/user/logout");
+      if (response.data.success) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       <nav className=" p-3 w-full z-20  flex items-center  rounded-2xl  bg-gradient-to-r from-rose-300 to-rose-400 shadow-lg opacity-60">
@@ -51,10 +61,11 @@ const Layout = ({ children }) => {
             {/*Logout*/}
             <li
               className="hover:font-medium hover:underline cursor-pointer"
-              onClick={() => {
-                localStorage.clear();
-                navigate("/login");
-              }}
+              // onClick={() => {
+              //   localStorage.clear();
+              //   navigate("/login");
+              // }}.
+              onClick={logoutHandler}
             >
               LogOut
             </li>
