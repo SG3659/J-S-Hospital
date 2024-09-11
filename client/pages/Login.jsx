@@ -5,6 +5,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../src/redux/alertSlice";
+import { signInSuccess, signInFailure } from "../src/redux/logInSlice";
+
 const login = () => {
   //const { loading } = useSelector((state) => state.alerts);
   //console.log(loading) redux checking
@@ -26,22 +28,20 @@ const login = () => {
     //backend connectivity
     try {
       dispatch(showLoading());
-      const response = await axios.post(
-        "/api/user/login",
-        JSON.stringify(formData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post("/api/user/login", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       dispatch(hideLoading());
       if (response.data.success) {
         //local storage created
         toast.success(response.data.message);
         localStorage.setItem("token", response.data.data);
+        dispatch(signInSuccess(response.data.message));
         navigate("/");
       } else {
+        dispatch(signInFailure(response.data.message));
         toast.error(response.data.message);
       }
     } catch (error) {
@@ -99,14 +99,14 @@ const login = () => {
         </Link>
       </div>
       <div>
-        {/* <p className=" text-base text-gray-600">
+        <p className=" text-base text-gray-600">
           <Link
-            to="/forgot-password"
+            to="/forgot--password"
             className="text-blue-600 font-bold hover:text-blue-700"
           >
             Forgot Password ?
           </Link>
-        </p> */}
+        </p>
       </div>
     </div>
   );
