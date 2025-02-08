@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 
+
 import "react-multi-carousel/lib/styles.css";
 import { useNavigate } from "react-router-dom";
 import Layout from "../src/componnents/Layout";
