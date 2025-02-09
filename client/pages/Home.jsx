@@ -11,6 +11,8 @@ import { showLoading, hideLoading } from "../src/redux/alertSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { departmentsArray, responsive } from "../src/constants/index";
 import Header from "../src/componnents/header/Header";
+
+
 import HowItWork from "../src/componnents/howItWorks/HowItWorks";
 import FAQ from "../src/componnents/faq/data";
 
