@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   register,
   login,
-
+  logout,
   userinfo,
   doctors,
   markseen,
@@ -12,6 +12,8 @@ const {
   bookeAppointment,
   checkAvailability,
   userAppointments,
+  resetPassword,
+  updatePassword,
 } = require("../Controller/userauth");
 
 const { authMiddleware } = require("../middlewares/authMiddleware");
@@ -19,6 +21,12 @@ const { authMiddleware } = require("../middlewares/authMiddleware");
 router.post("/register", register);
 //REGISTER || POST
 router.post("/login", login);
+// ResetPassword
+router.post("/reset-password", resetPassword);
+// Logut
+router.get("/logout", logout);
+//  UpdatePassword
+router.post("/update-password/:userId/:resetString", updatePassword);
 // User Post Data fetch
 router.post("/get-user-info-by-id", authMiddleware, userinfo);
 //Apply  Doctor || POST

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import Layout from "../src/componnents/Layout";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -92,8 +92,10 @@ const Bookingpage = () => {
     getData();
   }, []);
   return (
+    <>
+    <Layout>
     <div className="p-4">
-      <p className="text-3xl font-bold font-serif "> Booking-Page</p>     
+      <p className="text-3xl font-bold font-serif "> Booking-Page</p>
       <div className="mt-4 ">
         {doctor && (
           <div className="p-4 max-w-lg mx-auto border-2 rounded-xl flex flex-col items-center">
@@ -101,8 +103,8 @@ const Bookingpage = () => {
               Dr.{doctor.firstName}
               {doctor.lastName}
             </p>
-            <p className="text-white">({doctor.profession})</p>
-            <p className="mt-1 text-white ">
+            <p className="text-black">({doctor.profession})</p>
+            <p className="mt-1 text-black ">
               <b>Timings:</b>
               {doctor.fromTime}-{doctor.toTime}
             </p>
@@ -150,6 +152,8 @@ const Bookingpage = () => {
         )}
       </div>
     </div>
+    </Layout>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
+import Layout from "../src/componnents/Layout";
 const Appiontments = () => {
   const [appointments, setAppointments] = useState([]);
   const columns = [
@@ -9,12 +10,16 @@ const Appiontments = () => {
       id: "_id",
     },
     {
+      title: "Name",
+      id: "",
+    },
+    {
       title: "Date & Time ",
       id: "date",
       render: (text, record) => (
         <span>
-          {moment(record.date).format("HH:mm")} &nbsp
-          {moment(record.time).format("HH:mm")}
+          {moment(record.date).format("MMMM Do YYYY")} &nbsp
+          {moment(record.time).format("h:mm:ss a")}
         </span>
       ),
     },
@@ -33,7 +38,6 @@ const Appiontments = () => {
 
       if (response.data.success) {
         setAppointments(response.data.data);
-        // console.log(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -43,41 +47,44 @@ const Appiontments = () => {
     getData();
   }, []);
   return (
-    <div className="p-4">
-      <p className="text-3xl font-bold font-serif">Appointments List</p>
-      <table className="min-w-full divide-y   mt-6  shadow-lg">
-        <thead className="bg-gray-300 ">
-          <tr>
-            {columns.map((list) => (
-              <th
-                key={list.id}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-xl "
-              >
-                {list.title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200 ">
-          {appointments.map((appointmentd, appointmentIndex) => (
-            <tr key={appointmentIndex}>
-              {columns.map((column) => (
-                <td
-                  key={`${column.index}-${column.id}`}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 rounded-xl"
-                >
-                  {appointmentd[column.id]}
-                  {column.id === "action"
-                    ? column.render("", appointmentd)
-                    : ""}
-                </td>
+    <>
+      <Layout>
+        <div className="p-4">
+          <p className="text-3xl font-bold font-serif">Appointments List</p>
+          <table className="min-w-full divide-y   mt-6  shadow-lg">
+            <thead className="bg-gray-300 ">
+              <tr>
+                {columns.map((list) => (
+                  <th
+                    key={list.id}
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-xl "
+                  >
+                    {list.title}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200 ">
+              {appointments.map((appointmentd, appointmentIndex) => (
+                <tr key={appointmentIndex}>
+                  {columns.map((column) => (
+                    <td
+                      key={`${column.index}-${column.id}`}
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 rounded-xl"
+                    >
+                      {appointmentd[column.id]}
+                      {column.id === "action"
+                        ? column.render("", appointmentd)
+                        : ""}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+            </tbody>
+          </table>
+        </div>
+      </Layout>
+    </>
   );
 };
-
 export default Appiontments;

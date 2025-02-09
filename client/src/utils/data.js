@@ -1,44 +1,4 @@
-export const userMenu = [
-  {
-    id: "home",
-    path: "/",
-    title: "Home",
-  },
-  {
-    id: "appointments",
-    path: "/appointments",
-    title: "Appointments",
-  },
-  {
-    id: "apply doctor",
-    path: "/apply doctor",
-    title: "Apply Doctors",
-  },
-  {
-    id: "profile",
-    path: "/profile",
-  },
-];
-
-export const adminmenu = [
-  {
-    id: "home",
-    path: "/",
-    title: "Home",
-  },
-  {
-    id: "users",
-    title: "Users",
-    path: "/admin/users",
-  },
-  {
-    id: "doctors",
-    title: "Doctors",
-    path: "/admin/doctors",
-  },
-];
-
-export const departmentsArray = [
+const row1 = [
   {
     name: "Pediatrics",
     imageUrl:
@@ -86,25 +46,6 @@ export const departmentsArray = [
   },
 ];
 
-export const responsive = {
-  extraLarge: {
-    breakpoint: { max: 3000, min: 1324 },
-    items: 3,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-  large: {
-    breakpoint: { max: 1324, min: 1005 },
-    items: 3,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-  medium: {
-    breakpoint: { max: 1005, min: 700 },
-    items: 2,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-  small: {
-    breakpoint: { max: 700, min: 0 },
-    items: 1,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-};
+// const row2 = [nodejs, expressjs, mongodb, postgresql, git, github, java];
+
+export default row1;
